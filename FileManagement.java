@@ -15,6 +15,22 @@ public class FileManagement {
         }
     }
 
+    public HashST<String,Song> readFile(){
+        getFile("sample_song_data");
+        HashST<String, Song> song = new HashST<String, Song>();
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            String[] details = line.split("\t");
+            String title = details[0];
+            String artist = details[1];
+            double time = Double.parseDouble(details[2]);
+            String videofile = details[3];
+            Song newsong = new Song(title, artist, time, videofile);
+            song.put(title, newsong);
+        }
+        return song;
+    }
+
     
     
 }

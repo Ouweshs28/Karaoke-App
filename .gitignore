@@ -1,2 +1,3 @@
 #ignore classes files generated
 *.class
+.idea

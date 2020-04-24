@@ -30,7 +30,11 @@ public class KaraokeApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        HashST<String, Song> song = new HashST<String, Song>();
+        FileManagement songFile = new FileManagement();
+        song=songFile.readFile();
         Quit End = new Quit();
+
         
     
     
@@ -71,9 +75,11 @@ public class KaraokeApp extends Application {
         btnDisplayAll.setAlignment(Pos.BASELINE_LEFT);
         btnDisplayAll.setMaxWidth(250);
         btnDisplayAll.setFocusTraversable(false);
+        HashST<String, Song> finalSong = song;
         btnDisplayAll.setOnAction(e -> {
             try {
-                
+                ViewAllSongs allSongs=new ViewAllSongs();
+                allSongs.Table(finalSong);
             } catch (Exception ex) {
             }
 
