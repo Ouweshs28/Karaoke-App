@@ -15,9 +15,9 @@ public class MessageBox {
     /**
      * @param message String to be used to display appropriate message
      *  A method design to display appropriate message boxes
-     * @throws Exception for file related operations
+     *
      */
-    public static void box(String message) throws Exception {
+    public static void box(String message){
 
         messageWindow = new Stage();
 

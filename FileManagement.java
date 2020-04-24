@@ -23,7 +23,7 @@ public class FileManagement {
             String[] details = line.split("\t");
             String title = details[0];
             String artist = details[1];
-            double time = Double.parseDouble(details[2]);
+            double time = Double.parseDouble(details[2])/100;
             String videofile = details[3];
             Song newsong = new Song(title, artist, time, videofile);
             song.put(title, newsong);

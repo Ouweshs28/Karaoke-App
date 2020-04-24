@@ -26,13 +26,12 @@ public class KaraokeApp extends Application {
 
     /**
      * @param primaryStage The main GUI Application
-     * @throws Exception
+     *
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        HashST<String, Song> song = new HashST<String, Song>();
+    public void start(Stage primaryStage) {
         FileManagement songFile = new FileManagement();
-        song=songFile.readFile();
+        HashST<String, Song> song=songFile.readFile();
         Quit End = new Quit();
 
         
@@ -49,12 +48,20 @@ public class KaraokeApp extends Application {
         programTitle.setText("Karaoke Media Application");
         vbox.getChildren().add(programTitle);
 
+
         Button btnAddSong = new Button("Add  a Song");
         btnAddSong.setAlignment(Pos.BASELINE_LEFT);
         btnAddSong.setMaxWidth(250);
         btnAddSong.setFocusTraversable(false);
         btnAddSong.setOnAction(e -> {
             try {
+                AddSong addnew=new AddSong();
+                Song addSong=addnew.InputSong();
+                if(addSong.equals(new Song())){
+                    System.out.println("default object");
+                }else{
+                    song.put(addSong.getTitle(),addSong);
+                }
                 
             } catch (Exception ex) {
             }
@@ -75,11 +82,10 @@ public class KaraokeApp extends Application {
         btnDisplayAll.setAlignment(Pos.BASELINE_LEFT);
         btnDisplayAll.setMaxWidth(250);
         btnDisplayAll.setFocusTraversable(false);
-        HashST<String, Song> finalSong = song;
         btnDisplayAll.setOnAction(e -> {
             try {
                 ViewAllSongs allSongs=new ViewAllSongs();
-                allSongs.Table(finalSong);
+                allSongs.Table(song);
             } catch (Exception ex) {
             }
 

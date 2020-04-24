@@ -36,6 +36,14 @@ public class Song {
         this.title = title;
     }
 
+    public Song(){
+        this.title = "";
+        this.artist = "";
+        this.time = 0;
+        this.videofile = "";
+
+    }
+
     public Song(String title, String artist, double time, String videofile) {
         this.title = title;
         this.artist = artist;

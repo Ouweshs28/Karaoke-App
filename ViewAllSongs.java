@@ -31,9 +31,9 @@ public class ViewAllSongs {
     /**
      *
      * @param  songs
-     * @throws Exception
+     *
      */
-    public void Table(HashST<String, Song> songs) throws Exception {
+    public void Table(HashST<String, Song> songs) {
         tableWindow = new Stage();
         tableWindow.setResizable(false);
         tableWindow.setTitle("View All songs");
@@ -46,19 +46,19 @@ public class ViewAllSongs {
             Title.setCellValueFactory(new PropertyValueFactory<>("title"));
             Title.setMinWidth(columnWidth);
             Title.setResizable(false);
-            Title.setSortable(false);
+            Title.setSortable(true);
 
             TableColumn<Song, String> Artist = new TableColumn<>("Artist Name");
             Artist.setCellValueFactory(new PropertyValueFactory<>("artist"));
-            Artist.setMinWidth(153);
-            Artist.setResizable(false);
-            Artist.setSortable(false);
+            Artist.setMinWidth(columnWidth);
+            Artist.setResizable(true);
+            Artist.setSortable(true);
 
             TableColumn<Song, Double> Duration = new TableColumn<>("Song Duration");
             Duration.setCellValueFactory(new PropertyValueFactory<>("time"));
             Duration.setMinWidth(columnWidth);
-            Duration.setSortable(false);
-            Duration.setResizable(false);
+            Duration.setSortable(true);
+            Duration.setResizable(true);
 
             TableColumn<Song, String> File = new TableColumn<>("File Name");
             File.setCellValueFactory(new PropertyValueFactory<>("videofile"));
