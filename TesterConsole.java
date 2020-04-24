@@ -10,8 +10,8 @@ public class TesterConsole {
             String artist = details[1];
             double time = Double.parseDouble(details[2]);
             String videofile = details[3];
-            Song p = new Song(title, artist, time, videofile);
-            song.put(title, p); 
+            Song newsong = new Song(title, artist, time, videofile);
+            song.put(title, newsong); 
         }
     
         }
