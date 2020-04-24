@@ -1,5 +1,0 @@
-#ignore classes files generated
-*.class
-.idea
-*.iml
-*.xml

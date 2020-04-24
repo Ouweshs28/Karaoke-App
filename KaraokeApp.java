@@ -34,9 +34,6 @@ public class KaraokeApp extends Application {
         HashST<String, Song> song=songFile.readFile();
         Quit End = new Quit();
 
-        
-    
-    
         GridPane mainMenu = new GridPane();
         mainMenu.setAlignment(Pos.CENTER);
         mainMenu.setVgap(30);
