@@ -18,10 +18,7 @@ public class KaraokeApp extends Application {
      * @param args Launches the main method
      */
     public static void main(String[] args) {
-
         launch(args);
-    
-    
     }
 
     /**
@@ -51,7 +48,7 @@ public class KaraokeApp extends Application {
         btnAddSong.setMaxWidth(250);
         btnAddSong.setFocusTraversable(false);
         btnAddSong.setOnAction(e -> {
-            try {
+
                 AddSong addnew=new AddSong();
                 Song addSong=addnew.InputSong();
                 if(addSong.equals(new Song())){
@@ -60,8 +57,7 @@ public class KaraokeApp extends Application {
                     song.put(addSong.getTitle(),addSong);
                 }
                 
-            } catch (Exception ex) {
-            }
+
         });
 
         Button btnAddPlaylist = new Button("Add a song to playlist");
@@ -69,10 +65,7 @@ public class KaraokeApp extends Application {
         btnAddPlaylist.setMaxWidth(250);
         btnAddPlaylist.setFocusTraversable(false);
         btnAddPlaylist.setOnAction(e -> {
-            try {
-                
-            } catch (Exception ex) {
-            }
+
         });
 
         Button btnDisplayAll = new Button("Show all music");
@@ -80,11 +73,10 @@ public class KaraokeApp extends Application {
         btnDisplayAll.setMaxWidth(250);
         btnDisplayAll.setFocusTraversable(false);
         btnDisplayAll.setOnAction(e -> {
-            try {
+
                 ViewAllSongs allSongs=new ViewAllSongs();
                 allSongs.Table(song);
-            } catch (Exception ex) {
-            }
+
 
         });
 
@@ -93,11 +85,10 @@ public class KaraokeApp extends Application {
         btnExit.setMaxWidth(250);
         btnExit.setFocusTraversable(false);
         btnExit.setOnAction(e -> {
-            try {
+
                 End.Exit();
 
-            } catch (Exception ex) {
-            }
+
         });
 
         Text about = new Text("Ouwesh Seeroo");
@@ -116,12 +107,9 @@ public class KaraokeApp extends Application {
         primaryStage.setTitle("Karaoke App");
         primaryStage.setMaximized(true);
         primaryStage.setOnCloseRequest(e -> {
-            try {
                 e.consume();
                 End.Exit();
 
-            } catch (Exception ex) {
-            }
         });
         primaryStage.setResizable(true);
         primaryStage.show();

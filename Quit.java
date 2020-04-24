@@ -14,11 +14,7 @@ public class Quit {
 
     static Stage exitWindow;
 
-    /**
-     * @throws Exception in case file exception fails
-     */
-
-    public static void Exit() throws Exception {
+    public static void Exit(){
 
         exitWindow = new Stage();
         exitWindow.setTitle("Exit");
