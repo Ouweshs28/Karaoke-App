@@ -28,7 +28,7 @@ public class ViewAllSongs {
      * @param  songs
      *
      */
-    public ArrayList<Song> Table(HashST<String, Song> songs,ArrayList<Song> playlist) {
+    public OrderedSequentialSearchST<String,Song> Table(HashST<String, Song> songs,OrderedSequentialSearchST<String,Song> playlist) {
         tableWindow = new Stage();
         tableWindow.setResizable(false);
         tableWindow.setTitle("View All songs");
@@ -80,7 +80,7 @@ public class ViewAllSongs {
         searchbtn.setPadding(new Insets(10, 10, 10, 10));
         searchbtn.setMinWidth(200);
         searchbtn.setFocusTraversable(false);
-        ArrayList<Song> finalPlaylist = playlist;
+        OrderedSequentialSearchST<String,Song> finalPlaylist = playlist;
         searchbtn.setOnAction(e -> {
             if(checkField(searchField.getText())) {
                 Search searchsong = new Search();
@@ -101,7 +101,7 @@ public class ViewAllSongs {
         addPlaylistbtn.setOnAction(e -> {
             if(checkField(searchField.getText())) {
                 Search addPlaylist = new Search();
-                ArrayList<Song> Temp = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, finalPlaylist);
+                OrderedSequentialSearchST<String,Song> Temp = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, finalPlaylist);
             }
             });
 

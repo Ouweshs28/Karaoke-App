@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * A helper class that performs search
  */
 public class Search {
-    public HashST <String, Song> titleSearch(String crteria, HashST<String, Song> songs, ArrayList<Song> playlist) {
+    public HashST <String, Song> titleSearch(String crteria, HashST<String, Song> songs, OrderedSequentialSearchST<String,Song> playlist) {
 
             HashST<String, Song> result = new HashST<String, Song>();
 
@@ -17,10 +17,12 @@ public class Search {
         }
 
 
-    public ArrayList<Song> populatePlaylist(String crteria, HashST<String, Song> songs, ArrayList<Song> playlist) {
-
-            if (songs.contains(crteria.toLowerCase())) {
-                playlist.add(songs.get(crteria.toLowerCase()));
+    public OrderedSequentialSearchST<String,Song> populatePlaylist(String crteria, HashST<String, Song> songs, OrderedSequentialSearchST<String,Song> playlist) {
+        if(playlist.contains(crteria.toLowerCase())){
+                MessageBox.box("Song already in playlist");
+            }
+            else if (songs.contains(crteria.toLowerCase())) {
+                playlist.put(songs.get(crteria).getTitle().toLowerCase(),songs.get(crteria));
             } else {
                 MessageBox.box("Song not found enter another title");
             }

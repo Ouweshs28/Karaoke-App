@@ -31,7 +31,7 @@ public class KaraokeApp extends Application {
     public void start(Stage primaryStage) {
         FileManagement songFile = new FileManagement();
         HashST<String, Song> song=songFile.readFile();
-        ArrayList<Song> playlist=new ArrayList<Song>();
+        OrderedSequentialSearchST<String,Song> playlist=new OrderedSequentialSearchST<String,Song>();
         Quit End = new Quit();
 
         GridPane mainMenu = new GridPane();
