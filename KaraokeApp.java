@@ -55,7 +55,6 @@ public class KaraokeApp extends Application {
                 AddSong addnew=new AddSong();
                 Song addSong=addnew.InputSong();
                 if(addSong.getArtist().equalsIgnoreCase("")){
-                    System.out.println("default object");
                 }else{
                     song.put(addSong.getTitle(),addSong);
                 }
@@ -63,19 +62,19 @@ public class KaraokeApp extends Application {
 
         });
 
-        Button btnAddPlaylist = new Button("Add a song to playlist");
-        btnAddPlaylist.setAlignment(Pos.BASELINE_LEFT);
-        btnAddPlaylist.setMaxWidth(250);
-        btnAddPlaylist.setFocusTraversable(false);
-        btnAddPlaylist.setOnAction(e -> {
+        Button btnMediaPlayer = new Button("Play playlist");
+        btnMediaPlayer.setAlignment(Pos.BASELINE_LEFT);
+        btnMediaPlayer.setMaxWidth(250);
+        btnMediaPlayer.setFocusTraversable(false);
+        btnMediaPlayer.setOnAction(e -> {
 
         });
 
-        Button btnDisplayAll = new Button("Show all music");
-        btnDisplayAll.setAlignment(Pos.BASELINE_LEFT);
-        btnDisplayAll.setMaxWidth(250);
-        btnDisplayAll.setFocusTraversable(false);
-        btnDisplayAll.setOnAction(e -> {
+        Button btnAddtoPlaylist = new Button("Add to playlist");
+        btnAddtoPlaylist.setAlignment(Pos.BASELINE_LEFT);
+        btnAddtoPlaylist.setMaxWidth(250);
+        btnAddtoPlaylist.setFocusTraversable(false);
+        btnAddtoPlaylist.setOnAction(e -> {
 
                 ViewAllSongs allSongs=new ViewAllSongs();
                 allSongs.Table(song,playlist);
@@ -98,8 +97,8 @@ public class KaraokeApp extends Application {
 
         mainMenu.getChildren().add(vbox);
         mainMenu.add(btnAddSong, 0, 1);
-        mainMenu.add(btnAddPlaylist, 0, 2);
-        mainMenu.add(btnDisplayAll, 0, 3);
+        mainMenu.add(btnMediaPlayer, 0, 2);
+        mainMenu.add(btnAddtoPlaylist, 0, 3);
         mainMenu.add(btnExit, 0, 6);
         mainMenu.add(about, 0, 8);
         mainMenu.setHgap(50);

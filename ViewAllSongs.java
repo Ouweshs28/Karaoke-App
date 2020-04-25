@@ -153,6 +153,8 @@ public class ViewAllSongs {
             if (checkField(searchField.getText())) {
                 Search addPlaylist = new Search();
                 OrderedSequentialSearchST<String, Song> Temp = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, finalPlaylist);
+                for(String p:Temp.keys())
+                    playlistTable.getItems().add(Temp.get(p));
             }
         });
 
