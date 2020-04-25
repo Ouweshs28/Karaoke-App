@@ -9,6 +9,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 /**
  * This is the main class extending it to application for GUI
  */
@@ -29,6 +31,7 @@ public class KaraokeApp extends Application {
     public void start(Stage primaryStage) {
         FileManagement songFile = new FileManagement();
         HashST<String, Song> song=songFile.readFile();
+        ArrayList<Song> playlist=new ArrayList<Song>();
         Quit End = new Quit();
 
         GridPane mainMenu = new GridPane();
@@ -51,7 +54,7 @@ public class KaraokeApp extends Application {
 
                 AddSong addnew=new AddSong();
                 Song addSong=addnew.InputSong();
-                if(addSong.equals(new Song())){
+                if(addSong.getArtist().equalsIgnoreCase("")){
                     System.out.println("default object");
                 }else{
                     song.put(addSong.getTitle(),addSong);
@@ -75,7 +78,7 @@ public class KaraokeApp extends Application {
         btnDisplayAll.setOnAction(e -> {
 
                 ViewAllSongs allSongs=new ViewAllSongs();
-                allSongs.Table(song);
+                allSongs.Table(song,playlist);
 
 
         });

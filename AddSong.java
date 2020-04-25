@@ -158,6 +158,7 @@ public class AddSong {
         double b = Double.parseDouble(SongDuration);
 
        Song addsong=new Song(SongTitle,SongArtist,b,SongFile);
+        MessageBox.box("Successfully added !");
         addWindow.close();
        return addsong;
 
