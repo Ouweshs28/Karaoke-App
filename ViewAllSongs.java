@@ -69,17 +69,17 @@ public class ViewAllSongs {
 
 
 
-        TableColumn<Song, String> songColumn = new TableColumn<>("Song Title");
-        Title.setCellValueFactory(new PropertyValueFactory<>("title"));
-        Title.setMinWidth(columnWidth+ 30);
-        Title.setResizable(false);
-        Title.setSortable(true);
+        TableColumn<Song, String> PlaylistTtitle = new TableColumn<>("Song Title");
+        PlaylistTtitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        PlaylistTtitle.setMinWidth(columnWidth+ 30);
+        PlaylistTtitle.setResizable(false);
+        PlaylistTtitle.setSortable(true);
 
-        TableColumn<Song, String> artistColumn = new TableColumn<>("Artist Name");
-        Artist.setCellValueFactory(new PropertyValueFactory<>("artist"));
-        Artist.setMinWidth(columnWidth +30);
-        Artist.setResizable(true);
-        Artist.setSortable(true);
+        TableColumn<Song, String> PlaylistArtist = new TableColumn<>("Artist Name");
+        PlaylistArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
+        PlaylistArtist.setMinWidth(columnWidth +30);
+        PlaylistArtist.setResizable(true);
+        PlaylistArtist.setSortable(true);
 
         playlistTable = new TableView<>();
         playlistTable.setFocusTraversable(false);
@@ -87,12 +87,13 @@ public class ViewAllSongs {
         playlistTable.setEditable(false);
         playlistTable.prefHeightProperty().bind(tableWindow.heightProperty());
         playlistTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        OrderedSequentialSearchST<String, Song> finalPlaylist = playlist;
 
-        for(String p:playlist.keys())
-            playlistTable.getItems().add(playlist.get(p));
+        for(String p:playlist.keys()) {
+            playlistTable.getItems().add(new Song(playlist.get(p).getTitle(),
+                    playlist.get(p).getArtist()));
+        }
 
-        playlistTable.getColumns().addAll(songColumn, artistColumn);
+        playlistTable.getColumns().addAll(PlaylistTtitle, PlaylistArtist);
 
 
         TextField searchField = new TextField();
@@ -105,7 +106,7 @@ public class ViewAllSongs {
                 if (keyEvent.getCode().equals(KeyCode.ENTER)) {
                     if (checkField(searchField.getText())) {
                         Search searchsong = new Search();
-                        HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, finalPlaylist);
+                        HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, playlist);
                         tableSong.getItems().clear();
                         for (String s : temp.keys()) {
                             tableSong.getItems().add(temp.get(s));
@@ -122,8 +123,9 @@ public class ViewAllSongs {
         searchbtn.setOnAction(e -> {
             if (checkField(searchField.getText())) {
                 Search searchsong = new Search();
-                HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, finalPlaylist);
+                HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, playlist);
                 tableSong.getItems().clear();
+
                 for (String s : temp.keys()) {
                     tableSong.getItems().add(temp.get(s));
                 }
@@ -132,12 +134,12 @@ public class ViewAllSongs {
             }
         });
 
+
         Button showAllBtn = new Button("Show all");
         showAllBtn.setPadding(new Insets(10, 10, 10, 10));
         showAllBtn.setMinWidth(200);
         showAllBtn.setFocusTraversable(false);
         showAllBtn.setOnAction(e -> {
-
             tableSong.getItems().clear();
 
             for (String s : songs.keys())
@@ -152,9 +154,15 @@ public class ViewAllSongs {
         addPlaylistbtn.setOnAction(e -> {
             if (checkField(searchField.getText())) {
                 Search addPlaylist = new Search();
-                OrderedSequentialSearchST<String, Song> Temp = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, finalPlaylist);
-                for(String p:Temp.keys())
-                    playlistTable.getItems().add(Temp.get(p));
+                Song newSong = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, playlist);
+                if(newSong!=null){
+                playlist.put(newSong.getTitle().toLowerCase(), newSong);
+                playlistTable.getItems().clear();
+                for(String p:playlist.keys()) {
+                    playlistTable.getItems().add(new Song(playlist.get(p).getTitle(),
+                            playlist.get(p).getArtist()));
+                }
+            }
             }
         });
 
@@ -195,7 +203,7 @@ public class ViewAllSongs {
         tableWindow.setMaximized(true);
         tableWindow.showAndWait();
 
-        return finalPlaylist;
+        return playlist;
     }
 
     public boolean checkField(String s) {

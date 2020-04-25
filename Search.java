@@ -17,17 +17,26 @@ public class Search {
         }
 
 
-    public OrderedSequentialSearchST<String,Song> populatePlaylist(String crteria, HashST<String, Song> songs, OrderedSequentialSearchST<String,Song> playlist) {
+    public Song populatePlaylist(String crteria, HashST<String, Song> songs, OrderedSequentialSearchST<String,Song> playlist) {
+        for(String k:playlist.keys())
+            System.out.println(k);
+        System.out.println(playlist.contains(crteria));
+
         if(playlist.contains(crteria.toLowerCase())){
                 MessageBox.box("Song already in playlist");
             }
             else if (songs.contains(crteria.toLowerCase())) {
-                playlist.put(songs.get(crteria).getTitle().toLowerCase(),songs.get(crteria));
+
+                String songName = songs.get(crteria).getTitle();
+                String artistName = songs.get(crteria).getArtist();
+                    Song newSong = new Song(songName, artistName);
+                    return newSong;
+
             } else {
                 MessageBox.box("Song not found enter another title");
             }
 
-        return playlist;
+        return null;
     }
 
 
