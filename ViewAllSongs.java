@@ -16,7 +16,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 
-
 /**
  * A helper class that displays the data on table
  */
@@ -28,7 +27,7 @@ public class ViewAllSongs {
     /**
      * @param songs
      */
-    public OrderedSequentialSearchST<String, Song> Table(HashST<String, Song> songs, OrderedSequentialSearchST<String, Song> playlist) {
+    public PlayList Table(HashST<String, Song> songs, PlayList playlist) {
         tableWindow = new Stage();
         tableWindow.setResizable(false);
         tableWindow.setTitle("View All songs");
@@ -86,10 +85,10 @@ public class ViewAllSongs {
         playlistTable.setEditable(false);
         playlistTable.prefHeightProperty().bind(tableWindow.heightProperty());
         playlistTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        Song templist[]=playlist.convertToArray();
+        for(Song p:templist) {
 
-        for(String p:playlist.keys()) {
-            playlistTable.getItems().add(new Song(playlist.get(p).getTitle(),
-                    playlist.get(p).getArtist()));
+            playlistTable.getItems().add(new Song(p.getTitle(), p.getArtist()));
         }
 
         playlistTable.getColumns().addAll(PlaylistTtitle, PlaylistArtist);
@@ -155,12 +154,12 @@ public class ViewAllSongs {
                 Search addPlaylist = new Search();
                 Song newSong = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, playlist);
                 if(newSong!=null){
-                playlist.put(newSong.getTitle().toLowerCase(), newSong);
+                playlist.addLast(newSong);
                 playlistTable.getItems().clear();
-                for(String p:playlist.keys()) {
-                    playlistTable.getItems().add(new Song(playlist.get(p).getTitle(),
-                            playlist.get(p).getArtist()));
-                }
+                    Song tempplay[]=playlist.convertToArray();
+                    for(Song p:tempplay) {
+                        playlistTable.getItems().add(new Song(p.getTitle(), p.getArtist()));
+                    }
             }
             }
         });

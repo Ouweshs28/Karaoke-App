@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This is the main class extending it to application for GUI
@@ -31,7 +32,7 @@ public class KaraokeApp extends Application {
     public void start(Stage primaryStage) {
         FileManagement songFile = new FileManagement();
         HashST<String, Song> song=songFile.readFile();
-        OrderedSequentialSearchST<String,Song> playlist=new OrderedSequentialSearchST<String,Song>();
+        PlayList playlist=new PlayList();
         Quit End = new Quit();
 
         GridPane mainMenu = new GridPane();
@@ -68,7 +69,7 @@ public class KaraokeApp extends Application {
         btnMediaPlayer.setFocusTraversable(false);
         btnMediaPlayer.setOnAction(e -> {
             KaraokeMediaplayer player =new KaraokeMediaplayer();
-            //player.StartMediaPlayer();
+            player.StartMediaPlayer(playlist);
         });
 
         Button btnAddtoPlaylist = new Button("Add to playlist");
