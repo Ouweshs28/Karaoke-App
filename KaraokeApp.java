@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 
 /**
  * This is the main class extending it to application for GUI
@@ -15,18 +17,30 @@ import javafx.stage.Stage;
 public class KaraokeApp extends Application {
 
 
+    public String takeArguement(){
+        final Parameters params = getParameters();
+        final List<String> parameters = params.getRaw();
+        String filepath="";
+        String args[]= parameters.toArray(new String[0]);
+
+        if(args.length==0){
+            filepath="sample_song_data";
+            return filepath;
+        }else if(args.length==1){
+            filepath=args[0];
+            return filepath;
+        }else{
+            System.out.println("Too many arguments");
+            System.exit(0);
+        }
+        return null;
+    }
+
     /**
      * @param args Launches the main method
      */
     public static void main(String[] args) {
-        String filepath;
-        if(args.length<0){
-            filepath="sample_song_data";
-        }else if(args.length==1){
-            filepath=args[0];
-        }else{
-            System.out.println("Too many arguments");
-        }
+
         launch(args);
     }
 
@@ -37,8 +51,10 @@ public class KaraokeApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        final String filepath=takeArguement();
+
         FileManagement songFile = new FileManagement();
-        HashST<String, Song> song=songFile.readFile("sample_song_data");
+        HashST<String, Song> song=songFile.readFile(filepath);
         PlayList playlist=new PlayList();
         Quit End = new Quit();
 
