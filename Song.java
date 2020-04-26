@@ -1,7 +1,7 @@
 public class Song {
     private String title;
     private String artist;
-    private double time;
+    private int time;
     private String videofile;
 
     public String getTitle() {
@@ -28,7 +28,7 @@ public class Song {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -49,13 +49,13 @@ public class Song {
         this.artist = artist;
     }
 
-    public Song(String title, String artist, double time) {
+    public Song(String title, String artist, int time) {
         this.title = title;
         this.artist = artist;
         this.time = time;
     }
 
-    public Song(String title, String artist, double time, String videofile) {
+    public Song(String title, String artist, int time, String videofile) {
         this.title = title;
         this.artist = artist;
         this.time = time;

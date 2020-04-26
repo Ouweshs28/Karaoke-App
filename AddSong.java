@@ -67,7 +67,7 @@ public class AddSong {
                Song returnSong = AddSong(inputSongTitle.getText(),inputSongArtist.getText(),inputSongDuration.getText(),inputSongFile.getText());
                 newSong.setTitle(returnSong.getTitle());
                 newSong.setArtist(returnSong.getArtist());
-                newSong.setTime(returnSong.getTime());
+                newSong.setTime((int) returnSong.getTime());
                 newSong.setVideofile(returnSong.getVideofile());
 
             } catch (Exception ex) {

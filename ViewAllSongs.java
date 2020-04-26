@@ -48,7 +48,7 @@ public class ViewAllSongs {
         Artist.setResizable(true);
         Artist.setSortable(true);
 
-        TableColumn<Song, Double> Duration = new TableColumn<>("Song Duration");
+        TableColumn<Song, Integer> Duration = new TableColumn<>("Song Duration");
         Duration.setCellValueFactory(new PropertyValueFactory<>("time"));
         Duration.setMinWidth(columnWidth + 30);
         Duration.setSortable(true);
