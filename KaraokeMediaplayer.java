@@ -2,7 +2,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -15,24 +14,31 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.io.File;
+
+/**
+ * Helper Class for media player
+ */
 
 public class KaraokeMediaplayer {
 
-    static Stage mediaPlayerWindow;
-    static Slider volumeSlider;
-    static boolean muteState = false;
-    static Media media;
-    static MediaPlayer mediaPlayer;
-    static MediaView mediaView;
-    static Text nowPlayingText;
-    static Text currentSong;
-    static Text nextPlayingText;
-    static Text nextSong;
+    private Stage mediaPlayerWindow;
+    private Slider volumeSlider;
+    private boolean muteState = false;
+    private Media media;
+    private MediaPlayer mediaPlayer;
+    private MediaView mediaView;
+    private Text nowPlayingText;
+    private Text currentSong;
+    private Text nextPlayingText;
+    private Text nextSong;
+
+    /**
+     *
+     * @param playlist takes playlist from main application page to play
+     */
 
     public void StartMediaPlayer(PlayList playlist) {
-
 
         mediaPlayerWindow = new Stage();
         mediaPlayerWindow.setResizable(false);
@@ -98,7 +104,6 @@ public class KaraokeMediaplayer {
 
 
         media = new Media(new File(fullpath).toURI().toString());
-        //Instantiating MediaPlayer class
         mediaPlayer = new MediaPlayer(media);
         mediaView = new MediaView(mediaPlayer);
         mediaView.setFitHeight(screenHeight / 5 * 4);
@@ -228,9 +233,20 @@ public class KaraokeMediaplayer {
 
     }
 
+    /**
+     *
+     * @param playList takes playlist and updates it accordingly
+     * @param path takes path of folder
+     */
+
     public void NextSong(PlayList playList, String path) {
 
         if ( playList.size() == 1) {
+            try {
+                playList.removeFirst();
+            } catch (Exception e) {
+
+            }
             MessageBox.box("No next song!");
             } else {
             try {
@@ -255,11 +271,9 @@ public class KaraokeMediaplayer {
                     });
 
                 } catch (Exception e) {
-                    e.printStackTrace();
 
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
 

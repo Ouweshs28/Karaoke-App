@@ -3,24 +3,30 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * This is the main class extending it to application for GUI
  */
 public class KaraokeApp extends Application {
 
+
     /**
      * @param args Launches the main method
      */
     public static void main(String[] args) {
+        String filepath;
+        if(args.length<0){
+            filepath="sample_song_data";
+        }else if(args.length==1){
+            filepath=args[0];
+        }else{
+            System.out.println("Too many arguments");
+        }
         launch(args);
     }
 
@@ -30,8 +36,9 @@ public class KaraokeApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+
         FileManagement songFile = new FileManagement();
-        HashST<String, Song> song=songFile.readFile();
+        HashST<String, Song> song=songFile.readFile("sample_song_data");
         PlayList playlist=new PlayList();
         Quit End = new Quit();
 
@@ -63,7 +70,7 @@ public class KaraokeApp extends Application {
 
         });
 
-        Button btnMediaPlayer = new Button("Play playlist");
+        Button btnMediaPlayer = new Button("Open Media Player");
         btnMediaPlayer.setAlignment(Pos.BASELINE_LEFT);
         btnMediaPlayer.setMaxWidth(250);
         btnMediaPlayer.setFocusTraversable(false);
@@ -72,7 +79,7 @@ public class KaraokeApp extends Application {
             player.StartMediaPlayer(playlist);
         });
 
-        Button btnAddtoPlaylist = new Button("Add to playlist");
+        Button btnAddtoPlaylist = new Button("Playlists/Songs");
         btnAddtoPlaylist.setAlignment(Pos.BASELINE_LEFT);
         btnAddtoPlaylist.setMaxWidth(250);
         btnAddtoPlaylist.setFocusTraversable(false);
@@ -101,8 +108,8 @@ public class KaraokeApp extends Application {
         mainMenu.add(btnAddSong, 0, 1);
         mainMenu.add(btnMediaPlayer, 0, 2);
         mainMenu.add(btnAddtoPlaylist, 0, 3);
-        mainMenu.add(btnExit, 0, 6);
-        mainMenu.add(about, 0, 8);
+        mainMenu.add(btnExit, 0, 4);
+        mainMenu.add(about, 0, 6);
         mainMenu.setHgap(50);
 
         Scene scene = new Scene(mainMenu);

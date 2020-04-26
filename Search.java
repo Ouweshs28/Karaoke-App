@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 /**
  * A helper class that performs search
  */
 public class Search {
+    /**
+    Function that performs a search of substring of all elements in the song list
+     @return result
+     **/
     public HashST<String, Song> titleSearch(String crteria, HashST<String, Song> songs) {
 
         HashST<String, Song> result = new HashST<String, Song>();
@@ -18,18 +18,24 @@ public class Search {
         return result;
     }
 
+    /**
+    Function that checks if the title exist in the playlist
+     If it does not exist it will return a song to be added in the playlist
+     else it will return null
+     @return Song or null if already exists
+     **/
+
 
     public Song populatePlaylist(String crteria, HashST<String, Song> songs, PlayList playlist) {
         Song temp[] = playlist.convertToArray();
         boolean exist = false;
         if (playlist.size() > 0) {
-
             for (Song songName : temp) {
                 if (songName.getTitle().toLowerCase().equals(crteria.toLowerCase())) {
                     exist = true;
+                    break;
                 }
             }
-
             if (exist) {
                 MessageBox.box("Song already in playlist");
             } else {
@@ -41,7 +47,6 @@ public class Search {
                     MessageBox.box("Song not found enter another title");
                 }
             }
-
         } else {
             if (songs.contains(crteria.toLowerCase())) {
                 Song newSong = songs.get(crteria.toLowerCase());

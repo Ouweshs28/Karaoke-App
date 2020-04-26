@@ -4,28 +4,29 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
 /**
  * A helper class that displays the data on table
+ *
  */
 public class ViewAllSongs {
 
-    static Stage tableWindow;
-    static TableView tableSong, playlistTable;
+    private Stage tableWindow;
+    private TableView tableSong, playlistTable;
 
     /**
+     *
      * @param songs
+     * @param playlist
+     * @return
      */
     public PlayList Table(HashST<String, Song> songs, PlayList playlist) {
         tableWindow = new Stage();
@@ -203,6 +204,12 @@ public class ViewAllSongs {
 
         return playlist;
     }
+
+    /**
+     *
+     * @param
+     * @return
+     */
 
     public boolean checkField(String s) {
         if (s.equals("")) {

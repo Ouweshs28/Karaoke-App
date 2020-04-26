@@ -2,21 +2,31 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class FileManagement {
-    File songfile;
-    Scanner scan=null;
+/**
+ * Class for File management
+ */
 
-    public void getFile(String filename){
-        songfile=new File(filename);
+public class FileManagement {
+    private File songfile;
+    private Scanner scan = null;
+
+    public void getFile(String filename) {
+        songfile = new File(filename);
         try {
             scan = new Scanner(songfile);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("File path is incorrect");
         }
     }
 
-    public HashST<String,Song> readFile(){
-        getFile("sample_song_data");
+    /**
+     *
+     * @param filename takes the file path
+     * @return HashST song library to be used
+     */
+
+    public HashST<String, Song> readFile(String filename) {
+        getFile(filename);
         HashST<String, Song> song = new HashST<String, Song>();
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -31,6 +41,5 @@ public class FileManagement {
         return song;
     }
 
-    
-    
+
 }

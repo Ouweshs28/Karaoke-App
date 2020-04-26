@@ -1,8 +1,4 @@
-
-
-
 import java.util.Locale;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,13 +15,7 @@ import javafx.stage.Stage;
  * Helper Class to input Song
  */
 public class AddSong {
-
-
-    static Stage addWindow;
-
-
-
-
+    private Stage addWindow;
     public Song InputSong() {
         TextField inputSongTitle, inputSongArtist, inputSongDuration, inputSongFile;
         Song newSong= new Song();
@@ -115,13 +105,21 @@ public class AddSong {
 
     }
 
+    /**
+     *
+     * @param SongTitle SongTitle from user input
+     * @param SongArtist SongArtist from user input
+     * @param SongDuration SongDuration from user input
+     * @param SongFile SongFile from user input
+     * @return Song object to add to HashST
+     */
+
     private Song AddSong(String SongTitle,String SongArtist,String SongDuration,String SongFile){
         /*
          *
          * durationcheck is a regex that verifies that a string has number and decimal
          * fileformat is a regex to check if file ends with .mov/.mkv/.avi/.mp4
          * */
-        String durationcheck = "-?\\d+(\\.\\d+)?";
         String empty = "";
         String fileformat= "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(.avi|.mp4|.mkv|.mov)$";
 
@@ -139,8 +137,8 @@ public class AddSong {
             MessageBox.box(messageCodeDurationEmpty);
             return null;
 
-        } else if (!SongDuration.matches(durationcheck) || SongDuration.equalsIgnoreCase("0")) {
-            String messageErrorBill = "Error ! Duration be numbers. Try again! Correct format 1.20 (1 min 20 sec)";
+        } else if (intCheck(SongDuration) || SongDuration.equalsIgnoreCase("0")) {
+            String messageErrorBill = "Error! Duration be in seconds. Try again! Correct format 120";
             MessageBox.box(messageErrorBill);
             return null;
 
@@ -154,7 +152,7 @@ public class AddSong {
             return null;
         }
 
-        double b = Double.parseDouble(SongDuration);
+        int b = Integer.parseInt(SongDuration);
 
        Song addsong=new Song(SongTitle,SongArtist,b,SongFile);
         MessageBox.box("Successfully added !");
@@ -162,6 +160,24 @@ public class AddSong {
        return addsong;
 
 
+    }
+
+    /**
+     *
+     * @param s String that check if a String is an integer
+     * @return
+     */
+
+    public boolean intCheck(String s)
+    {
+        try
+        {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex)
+        {
+            return false;
+        }
     }
 
 }
