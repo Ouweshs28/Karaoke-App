@@ -25,7 +25,7 @@ public class FileManagement {
     /**
      *
      * @param filename takes the file path
-     * @return HashST song library to be used
+     * @return HashST Song library to be used
      */
 
     public HashST<String, Song> readFile(String filename) {

@@ -24,7 +24,7 @@ public class Song {
         this.videofile = videofile;
     }
 
-    public double getTime() {
+    public int getTime() {
         return time;
     }
 
