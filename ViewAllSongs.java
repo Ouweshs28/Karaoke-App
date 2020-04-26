@@ -15,8 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.util.LinkedList;
-import java.util.*;
+
 
 /**
  * A helper class that displays the data on table
@@ -106,7 +105,7 @@ public class ViewAllSongs {
                 if (keyEvent.getCode().equals(KeyCode.ENTER)) {
                     if (checkField(searchField.getText())) {
                         Search searchsong = new Search();
-                        HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, playlist);
+                        HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
                         tableSong.getItems().clear();
                         for (String s : temp.keys()) {
                             tableSong.getItems().add(temp.get(s));
@@ -123,7 +122,7 @@ public class ViewAllSongs {
         searchbtn.setOnAction(e -> {
             if (checkField(searchField.getText())) {
                 Search searchsong = new Search();
-                HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs, playlist);
+                HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
                 tableSong.getItems().clear();
 
                 for (String s : temp.keys()) {

@@ -67,7 +67,8 @@ public class KaraokeApp extends Application {
         btnMediaPlayer.setMaxWidth(250);
         btnMediaPlayer.setFocusTraversable(false);
         btnMediaPlayer.setOnAction(e -> {
-
+            KaraokeMediaplayer player =new KaraokeMediaplayer();
+            //player.StartMediaPlayer();
         });
 
         Button btnAddtoPlaylist = new Button("Add to playlist");
