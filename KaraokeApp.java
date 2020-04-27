@@ -78,9 +78,8 @@ public class KaraokeApp extends Application {
 
                 AddSong addnew=new AddSong();
                 Song addSong=addnew.InputSong();
-                if(addSong.getArtist().equalsIgnoreCase("")){
-                }else{
-                    song.put(addSong.getTitle(),addSong);
+                if(!addSong.getArtist().equalsIgnoreCase("")){
+                    song.put(addSong.getTitle().toLowerCase(),addSong);
                 }
                 
 

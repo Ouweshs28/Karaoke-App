@@ -96,40 +96,26 @@ public class ViewAllSongs {
 
 
         TextField searchField = new TextField();
-        searchField.setPromptText("Enter Criteria");
+        searchField.setPromptText("Type something to search");
         searchField.setMinWidth(200);
         searchField.setFocusTraversable(false);
-        searchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                    if (checkField(searchField.getText())) {
-                        Search searchsong = new Search();
-                        HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
-                        tableSong.getItems().clear();
-                        for (String s : temp.keys()) {
-                            tableSong.getItems().add(temp.get(s));
-                        }
-                    }
-                }
-            }
-        });
+
 
         Button searchbtn = new Button("Search");
         searchbtn.setPadding(new Insets(10, 10, 10, 10));
         searchbtn.setMinWidth(200);
         searchbtn.setFocusTraversable(false);
         searchbtn.setOnAction(e -> {
-            if (checkField(searchField.getText())) {
-                Search searchsong = new Search();
-                HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
-                tableSong.getItems().clear();
+            search(searchField,songs);
 
-                for (String s : temp.keys()) {
-                    tableSong.getItems().add(temp.get(s));
+        });
+
+        searchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                    search(searchField,songs);
                 }
-
-
             }
         });
 
@@ -151,9 +137,12 @@ public class ViewAllSongs {
         addPlaylistbtn.setMinWidth(200);
         addPlaylistbtn.setFocusTraversable(false);
         addPlaylistbtn.setOnAction(e -> {
-            if (checkField(searchField.getText())) {
+            if(tableSong.getSelectionModel().getSelectedItem()==null){
+                MessageBox.box("Please select a song from table");
+            }else {
                 Search addPlaylist = new Search();
-                Song newSong = addPlaylist.populatePlaylist(searchField.getText().toLowerCase(), songs, playlist);
+                Song addSong= (Song) tableSong.getSelectionModel().getSelectedItem();
+                Song newSong = addPlaylist.populatePlaylist(addSong.getTitle().toLowerCase(), songs, playlist);
                 if(newSong!=null){
                 playlist.addLast(newSong);
                 playlistTable.getItems().clear();
@@ -217,6 +206,27 @@ public class ViewAllSongs {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     *
+     * @param searchField search field
+     * @param songs Song HASHST Library
+     *   Performs search operation
+     */
+
+    public void search(TextField searchField,HashST<String,Song>songs){
+        if (checkField(searchField.getText())) {
+            Search searchsong = new Search();
+            HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
+            tableSong.getItems().clear();
+
+            for (String s : temp.keys()) {
+                tableSong.getItems().add(temp.get(s));
+            }
+
+
         }
     }
 

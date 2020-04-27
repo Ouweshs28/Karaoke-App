@@ -1,5 +1,4 @@
 import java.util.Locale;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -65,11 +64,12 @@ public class AddSong {
         btnAdd.setFocusTraversable(false);
         btnAdd.setOnAction(e -> {
             Song returnSong = AddSong(inputSongTitle.getText(), inputSongArtist.getText(), inputSongDuration.getText(), inputSongFile.getText());
-            newSong.setTitle(returnSong.getTitle());
-            newSong.setArtist(returnSong.getArtist());
-            newSong.setTime(returnSong.getTime());
-            newSong.setVideofile(returnSong.getVideofile());
-
+            if(returnSong!=null) {
+                newSong.setTitle(returnSong.getTitle());
+                newSong.setArtist(returnSong.getArtist());
+                newSong.setTime(returnSong.getTime());
+                newSong.setVideofile(returnSong.getVideofile());
+            }
         });
 
         Button btnCancel = new Button("Cancel");
@@ -120,7 +120,6 @@ public class AddSong {
         String empty = "";
         String fileformat = "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(.avi|.mp4|.mkv|.mov)$";
 
-
         if (SongTitle.equalsIgnoreCase(empty)) {
             String messageTitleEmpty = "Song Title cannot be empty !";
             MessageBox.box(messageTitleEmpty);
@@ -134,7 +133,7 @@ public class AddSong {
             MessageBox.box(messageCodeDurationEmpty);
             return null;
 
-        } else if (intCheck(SongDuration) || SongDuration.equalsIgnoreCase("0")) {
+        } else if ((!intCheck(SongDuration)) || (SongDuration.equalsIgnoreCase("0"))) {
             String messageErrorBill = "Error! Duration be in seconds. Try again! Correct format 120";
             MessageBox.box(messageErrorBill);
             return null;
