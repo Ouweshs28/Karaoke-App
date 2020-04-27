@@ -121,7 +121,7 @@ public class ViewAllSongs {
         });
 
 
-        Button showAllBtn = new Button("Show all");
+        Button showAllBtn = new Button("Show all music");
         showAllBtn.setPadding(new Insets(10, 10, 10, 10));
         showAllBtn.setMinWidth(200);
         showAllBtn.setFocusTraversable(false);
@@ -231,12 +231,15 @@ public class ViewAllSongs {
     public HashST<String, Song> titleSearch(String crteria, HashST<String, Song> songs) {
 
         HashST<String, Song> result = new HashST<String, Song>();
-
+        StopWatch search =new StopWatch();
+        System.out.println("Search started keyword "+crteria);
+        search.start();
         for (String s : songs.keys()) {
             if (songs.get(s).getTitle().toLowerCase().contains(crteria)) {
                 result.put(songs.get(s).getTitle(), songs.get(s));
             }
         }
+        System.out.println("Search completed "+search.stop());
         return result;
     }
 

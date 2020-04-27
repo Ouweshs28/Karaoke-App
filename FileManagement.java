@@ -33,20 +33,20 @@ public class FileManagement {
         HashST<String, Song> song = new HashST<String, Song>();
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
-            String[] details = line.split("\t");
-            if(details.length!=4){
-                System.out.println("Invalid file entered");
+            try{
+                String[] details = line.split("\t");
+                String title = details[0];
+                String artist = details[1];
+                int time = Integer.parseInt(details[2]);
+                String videofile = details[3];
+                Song newsong = new Song(title, artist, time, videofile);
+                song.put(title.toLowerCase(), newsong);
+            }catch(ArrayIndexOutOfBoundsException exception) {
+                System.out.println("File not valid");
                 System.exit(0);
-            }else{
-
-            String title = details[0];
-            String artist = details[1];
-            int time = Integer.parseInt(details[2]);
-            String videofile = details[3];
-            Song newsong = new Song(title, artist, time, videofile);
-            song.put(title.toLowerCase(), newsong);
+            }
         }
-        }
+        //}
         return song;
     }
 
