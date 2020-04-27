@@ -67,7 +67,8 @@ public class KaraokeApp extends Application {
 
         Label programTitle = new Label();
         programTitle.setText("Karaoke Media Application");
-        vbox.getChildren().add(programTitle);
+        Text about = new Text("______________________________");
+        vbox.getChildren().addAll(programTitle,about);
 
 
         Button btnAddSong = new Button("Add  a Song");
@@ -117,27 +118,26 @@ public class KaraokeApp extends Application {
 
         });
 
-        Text about = new Text("Ouwesh Seeroo");
+
 
         mainMenu.getChildren().add(vbox);
         mainMenu.add(btnAddSong, 0, 1);
         mainMenu.add(btnMediaPlayer, 0, 2);
         mainMenu.add(btnAddtoPlaylist, 0, 3);
         mainMenu.add(btnExit, 0, 4);
-        mainMenu.add(about, 0, 6);
         mainMenu.setHgap(50);
 
-        Scene scene = new Scene(mainMenu);
+        Scene scene = new Scene(mainMenu,600,500);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Karaoke App");
-        primaryStage.setMaximized(true);
+        primaryStage.setMaximized(false);
         primaryStage.setOnCloseRequest(e -> {
                 e.consume();
                 End.Exit();
 
         });
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }

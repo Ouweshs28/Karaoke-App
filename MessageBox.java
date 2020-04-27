@@ -22,9 +22,9 @@ public class MessageBox {
         messageWindow = new Stage();
 
         messageWindow.setTitle("Message");
-        messageWindow.getIcons().add(new Image("file:images/logo.png"));
         messageWindow.setResizable(false);
         messageWindow.initModality(Modality.APPLICATION_MODAL);
+        messageWindow.setAlwaysOnTop(true);
 
         GridPane messagePane = new GridPane();
         messagePane.setAlignment(Pos.CENTER);

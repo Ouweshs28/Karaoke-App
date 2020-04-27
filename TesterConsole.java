@@ -1,3 +1,4 @@
+
 public class TesterConsole {
     public static void main(String[] args) {
         FileManagement songfile = new FileManagement();
@@ -8,7 +9,7 @@ public class TesterConsole {
             String[] details = line.split("\t");
             String title = details[0];
             String artist = details[1];
-            double time = Double.parseDouble(details[2]);
+            int time = Integer.parseInt(details[2]);
             String videofile = details[3];
             Song newsong = new Song(title, artist, time, videofile);
             song.put(title, newsong); 

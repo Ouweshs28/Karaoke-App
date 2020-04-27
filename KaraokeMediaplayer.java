@@ -1,6 +1,3 @@
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -18,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.File;
+import javafx.util.Duration;
 
 /**
  * Helper Class for media player
@@ -38,7 +36,6 @@ public class KaraokeMediaplayer {
     private Text nextSong;
 
     /**
-     *
      * @param playlist takes playlist from main application page to play
      */
 
@@ -68,7 +65,7 @@ public class KaraokeMediaplayer {
 
         String currentSongTitle = null;
         try {
-            currentSongTitle = playlist.getFirst().getTitle() + " - " + playlist.getFirst().getArtist();
+            currentSongTitle = playlist.getFirst().getTitle() + " --- " + playlist.getFirst().getArtist();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +74,7 @@ public class KaraokeMediaplayer {
         currentSong.setText(currentSongTitle);
 
         nowPlayingText = new Text();
-        nowPlayingText.setText("Now playing: ");
+        nowPlayingText.setText("Currently playing: ");
 
 
         nextPlayingText = new Text();
@@ -90,7 +87,7 @@ public class KaraokeMediaplayer {
             if (playlist.size() == 1) {
                 nextSongTitle = "No next song!";
             } else {
-                nextSongTitle = playlist.getAt(1).getTitle() + " - " + playlist.getAt(1).getArtist();
+                nextSongTitle = playlist.getAt(1).getTitle() + " --- " + playlist.getAt(1).getArtist();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,14 +123,14 @@ public class KaraokeMediaplayer {
                 mediaPlayer.play();
                 playBtn.setText("Pause");
             }
-            if(playlist.size()==0){
+            if (playlist.size() == 0) {
                 MessageBox.box("Playlist empty add new songs");
             }
 
         });
 
         mediaPlayer.setOnEndOfMedia(() -> {
-            NextSong(playlist,path);
+            NextSong(playlist, path);
         });
 
 
@@ -219,29 +216,15 @@ public class KaraokeMediaplayer {
         mediaBox.setMinHeight(screenHeight / 5 * 4);
         mediaBox.getChildren().add(mediaView);
 
-        HBox sliderBox= new HBox();
+        HBox sliderBox = new HBox();
         sliderBox.setAlignment(Pos.CENTER);
-        videoSlider= new Slider();
+        videoSlider = new Slider();
         videoSlider.setFocusTraversable(false);
         videoSlider.setMinWidth(screenHeight / 6 * 4);
         videoSlider.setMaxWidth(screenHeight / 6 * 4);
-        videoSlider.setMin(0);
-        videoSlider.setMax(100);
         sliderBox.getChildren().add(videoSlider);
 
-
-        videoSlider.valueProperty().addListener(new InvalidationListener() {
-            public void invalidated(Observable ov)
-            {
-                    updatesValues();
-
-                    if(videoSlider.isPressed()){
-                        mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(videoSlider.getValue() / 100));
-                    }
-            }
-        });
-
-
+        updatesValues();
 
 
         //hbox 3
@@ -252,7 +235,7 @@ public class KaraokeMediaplayer {
         //final vbox (containing all 3hbox)
         VBox finalBox = new VBox(20);
         finalBox.setAlignment(Pos.CENTER);
-        finalBox.getChildren().addAll(statusBox, mediaBox,sliderBox, btnBox);
+        finalBox.getChildren().addAll(statusBox, mediaBox, sliderBox, btnBox);
 
 
         gridPane.add(finalBox, 0, 0);
@@ -272,48 +255,76 @@ public class KaraokeMediaplayer {
 
     }
 
-    protected void updatesValues()
-    {
-        Platform.runLater(new Runnable() {
-            public void run()
-            {
-                // Updating to the new time value
-                // This will move the slider while running your video
-                videoSlider.setValue(mediaPlayer.getCurrentTime().toMillis()/
-                        mediaPlayer.getTotalDuration()
-                                .toMillis()
-                                * 100);
+    protected void updatesValues() {
+
+        mediaPlayer.setOnReady(() -> {
+            videoSlider.setMin(0);
+            videoSlider.setMax(mediaPlayer.getMedia().getDuration().toSeconds());
+            videoSlider.setValue(0);
+        });
+
+        videoSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+
+                if(videoSlider.isPressed()){
+                   double value = videoSlider.getValue();
+                   mediaPlayer.seek(new Duration(value * 1000));
+                }
             }
         });
+
+        /*
+        Platform.runLater(new Runnable() {
+            public void run() {
+                // Updating to the new time value
+                // This will move the slider while running your video
+                videoSlider.setValue(mediaPlayer.getCurrentTime().toMillis() /
+                        mediaPlayer.getTotalDuration()
+                                .toMillis()
+                        * 100);
+            }
+        });*/
+
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                Duration duration = mediaPlayer.getCurrentTime();
+                videoSlider.setValue(duration.toSeconds());
+            }
+        });
+
     }
 
 
     /**
-     *
      * @param playList takes playlist and updates it accordingly
-     * @param path takes path of folder
+     * @param path     takes path of folder
      */
 
     public void NextSong(PlayList playList, String path) {
 
-        if ( playList.size() == 1) {
+        if (playList.size() == 1) {
             try {
                 playList.removeFirst();
+                mediaPlayer.stop();
+                mediaPlayer.dispose();
             } catch (Exception e) {
 
             }
             MessageBox.box("No next song!");
-            } else {
+            mediaPlayerWindow.close();
+        } else {
             try {
                 playList.removeFirst();
                 try {
 
                     String newSongFile = playList.getFirst().getVideofile();
-                    currentSong.setText(playList.getFirst().getTitle() + " By " + playList.getFirst().getArtist());
+                    currentSong.setText(playList.getFirst().getTitle() + " --- " + playList.getFirst().getArtist());
                     if (playList.size() == 1) {
                         nextSong.setText("No next song available");
                     } else {
-                        nextSong.setText(playList.getAt(1).getTitle() + " By " + playList.getAt(1).getArtist());
+                        nextSong.setText(playList.getAt(1).getTitle() + " --- " + playList.getAt(1).getArtist());
                     }
                     mediaPlayer.stop();
                     mediaPlayer.dispose();
@@ -321,8 +332,9 @@ public class KaraokeMediaplayer {
                     mediaPlayer = new MediaPlayer(media);
                     mediaView.setMediaPlayer(mediaPlayer);
                     mediaPlayer.play();
+                    updatesValues();
                     mediaPlayer.setOnEndOfMedia(() -> {
-                        NextSong(playList,path);
+                        NextSong(playList, path);
                     });
 
                 } catch (Exception e) {

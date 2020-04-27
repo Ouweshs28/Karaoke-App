@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -31,7 +32,7 @@ public class ViewAllSongs {
     public PlayList Table(HashST<String, Song> songs, PlayList playlist) {
         tableWindow = new Stage();
         tableWindow.setResizable(false);
-        tableWindow.setTitle("View All songs");
+        tableWindow.setTitle("Songs / Playlist");
 
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double columnWidth = (screenWidth - 20) / 7;
@@ -140,9 +141,8 @@ public class ViewAllSongs {
             if(tableSong.getSelectionModel().getSelectedItem()==null){
                 MessageBox.box("Please select a song from table");
             }else {
-                Search addPlaylist = new Search();
                 Song addSong= (Song) tableSong.getSelectionModel().getSelectedItem();
-                Song newSong = addPlaylist.populatePlaylist(addSong.getTitle().toLowerCase(), songs, playlist);
+                Song newSong = populatePlaylist(addSong.getTitle().toLowerCase(), songs, playlist);
                 if(newSong!=null){
                 playlist.addLast(newSong);
                 playlistTable.getItems().clear();
@@ -167,9 +167,9 @@ public class ViewAllSongs {
         songBox.getChildren().add(tableSong);
         songBox.setMinWidth(3 * columnWidth);
         songBox.setAlignment(Pos.CENTER);
-
+        Text about = new Text("Please select a song from table to add");
         VBox buttonBox = new VBox(20);
-        buttonBox.getChildren().addAll(searchField, searchbtn, showAllBtn, addPlaylistbtn, btnBack);
+        buttonBox.getChildren().addAll(about,searchField, searchbtn, showAllBtn, addPlaylistbtn, btnBack);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox playlistBox = new VBox();
@@ -218,8 +218,7 @@ public class ViewAllSongs {
 
     public void search(TextField searchField,HashST<String,Song>songs){
         if (checkField(searchField.getText())) {
-            Search searchsong = new Search();
-            HashST<String, Song> temp = searchsong.titleSearch(searchField.getText().toLowerCase(), songs);
+            HashST<String, Song> temp = titleSearch(searchField.getText().toLowerCase(), songs);
             tableSong.getItems().clear();
 
             for (String s : temp.keys()) {
@@ -228,6 +227,57 @@ public class ViewAllSongs {
 
 
         }
+    }
+    public HashST<String, Song> titleSearch(String crteria, HashST<String, Song> songs) {
+
+        HashST<String, Song> result = new HashST<String, Song>();
+
+        for (String s : songs.keys()) {
+            if (songs.get(s).getTitle().toLowerCase().contains(crteria)) {
+                result.put(songs.get(s).getTitle(), songs.get(s));
+            }
+        }
+        return result;
+    }
+
+    /**
+     Function that checks if the title exist in the playlist
+     If it does not exist it will return a song to be added in the playlist
+     else it will return null
+     @return Song or null if already exists
+     **/
+
+
+    public Song populatePlaylist(String crteria, HashST<String, Song> songs, PlayList playlist) {
+        Song temp[] = playlist.convertToArray();
+        boolean exist = false;
+        if (playlist.size() > 0) {
+            for (Song songName : temp) {
+                if (songName.getTitle().toLowerCase().equals(crteria.toLowerCase())) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (exist) {
+                MessageBox.box("Song already in playlist");
+            } else {
+                if (songs.contains(crteria.toLowerCase())) {
+                    Song newSong = songs.get(crteria.toLowerCase());
+                    return newSong;
+
+                } else {
+                    MessageBox.box("Song not found enter another title");
+                }
+            }
+        } else {
+            if (songs.contains(crteria.toLowerCase())) {
+                Song newSong = songs.get(crteria.toLowerCase());
+                return newSong;
+
+            }
+        }
+
+        return null;
     }
 
 }
