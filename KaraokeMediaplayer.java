@@ -1,3 +1,6 @@
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -24,6 +27,7 @@ public class KaraokeMediaplayer {
 
     private Stage mediaPlayerWindow;
     private Slider volumeSlider;
+    private Slider videoSlider;
     private boolean muteState = false;
     private Media media;
     private MediaPlayer mediaPlayer;
@@ -122,6 +126,9 @@ public class KaraokeMediaplayer {
                 mediaPlayer.play();
                 playBtn.setText("Pause");
             }
+            if(playlist.size()==0){
+                MessageBox.box("Playlist empty add new songs");
+            }
 
         });
 
@@ -183,7 +190,7 @@ public class KaraokeMediaplayer {
         });
 
 
-        Button btnBack = new Button("Close Media");
+        Button btnBack = new Button("Close Player");
         btnBack.setPadding(new Insets(10, 10, 10, 10));
         btnBack.setMinWidth(200);
         btnBack.setFocusTraversable(false);
@@ -212,6 +219,31 @@ public class KaraokeMediaplayer {
         mediaBox.setMinHeight(screenHeight / 5 * 4);
         mediaBox.getChildren().add(mediaView);
 
+        HBox sliderBox= new HBox();
+        sliderBox.setAlignment(Pos.CENTER);
+        videoSlider= new Slider();
+        videoSlider.setFocusTraversable(false);
+        videoSlider.setMinWidth(screenHeight / 6 * 4);
+        videoSlider.setMaxWidth(screenHeight / 6 * 4);
+        videoSlider.setMin(0);
+        videoSlider.setMax(100);
+        sliderBox.getChildren().add(videoSlider);
+
+
+        videoSlider.valueProperty().addListener(new InvalidationListener() {
+            public void invalidated(Observable ov)
+            {
+                    updatesValues();
+
+                    if(videoSlider.isPressed()){
+                        mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(videoSlider.getValue() / 100));
+                    }
+            }
+        });
+
+
+
+
         //hbox 3
         HBox btnBox = new HBox(20);
         btnBox.setAlignment(Pos.CENTER);
@@ -220,7 +252,7 @@ public class KaraokeMediaplayer {
         //final vbox (containing all 3hbox)
         VBox finalBox = new VBox(20);
         finalBox.setAlignment(Pos.CENTER);
-        finalBox.getChildren().addAll(statusBox, mediaBox, btnBox);
+        finalBox.getChildren().addAll(statusBox, mediaBox,sliderBox, btnBox);
 
 
         gridPane.add(finalBox, 0, 0);
@@ -229,9 +261,32 @@ public class KaraokeMediaplayer {
         Scene scene = new Scene(gridPane);
 
         mediaPlayerWindow.setScene(scene);
+        mediaPlayerWindow.setOnCloseRequest(e -> {
+            mediaPlayer.stop();
+            mediaPlayerWindow.close();
+            e.consume();
+
+
+        });
         mediaPlayerWindow.show();
 
     }
+
+    protected void updatesValues()
+    {
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                // Updating to the new time value
+                // This will move the slider while running your video
+                videoSlider.setValue(mediaPlayer.getCurrentTime().toMillis()/
+                        mediaPlayer.getTotalDuration()
+                                .toMillis()
+                                * 100);
+            }
+        });
+    }
+
 
     /**
      *

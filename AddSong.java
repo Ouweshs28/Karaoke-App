@@ -1,4 +1,5 @@
 import java.util.Locale;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,9 +17,10 @@ import javafx.stage.Stage;
  */
 public class AddSong {
     private Stage addWindow;
+
     public Song InputSong() {
         TextField inputSongTitle, inputSongArtist, inputSongDuration, inputSongFile;
-        Song newSong= new Song();
+        Song newSong = new Song();
 
         addWindow = new Stage();
         addWindow.setTitle("Add a new song");
@@ -49,7 +51,7 @@ public class AddSong {
 
         Text SongDuration = new Text("Enter Song Duration:");
         inputSongDuration = new TextField();
-        inputSongDuration.setPromptText("enter Song duration 1.20 (1 min 20 secs)");
+        inputSongDuration.setPromptText("enter Song duration in seconds");
         inputSongDuration.setFocusTraversable(false);
 
         Text SongFile = new Text("Enter Song File Name :");
@@ -62,16 +64,12 @@ public class AddSong {
         btnAdd.setMinWidth(185);
         btnAdd.setFocusTraversable(false);
         btnAdd.setOnAction(e -> {
-            try {
+            Song returnSong = AddSong(inputSongTitle.getText(), inputSongArtist.getText(), inputSongDuration.getText(), inputSongFile.getText());
+            newSong.setTitle(returnSong.getTitle());
+            newSong.setArtist(returnSong.getArtist());
+            newSong.setTime(returnSong.getTime());
+            newSong.setVideofile(returnSong.getVideofile());
 
-               Song returnSong = AddSong(inputSongTitle.getText(),inputSongArtist.getText(),inputSongDuration.getText(),inputSongFile.getText());
-                newSong.setTitle(returnSong.getTitle());
-                newSong.setArtist(returnSong.getArtist());
-                newSong.setTime(returnSong.getTime());
-                newSong.setVideofile(returnSong.getVideofile());
-
-            } catch (Exception ex) {
-            }
         });
 
         Button btnCancel = new Button("Cancel");
@@ -106,22 +104,21 @@ public class AddSong {
     }
 
     /**
-     *
-     * @param SongTitle SongTitle from user input
-     * @param SongArtist SongArtist from user input
+     * @param SongTitle    SongTitle from user input
+     * @param SongArtist   SongArtist from user input
      * @param SongDuration SongDuration from user input
-     * @param SongFile SongFile from user input
+     * @param SongFile     SongFile from user input
      * @return Song object to add to HashST
      */
 
-    private Song AddSong(String SongTitle,String SongArtist,String SongDuration,String SongFile){
+    private Song AddSong(String SongTitle, String SongArtist, String SongDuration, String SongFile) {
         /*
          *
          * durationcheck is a regex that verifies that a string has number and decimal
          * fileformat is a regex to check if file ends with .mov/.mkv/.avi/.mp4
          * */
         String empty = "";
-        String fileformat= "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(.avi|.mp4|.mkv|.mov)$";
+        String fileformat = "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(.avi|.mp4|.mkv|.mov)$";
 
 
         if (SongTitle.equalsIgnoreCase(empty)) {
@@ -142,7 +139,7 @@ public class AddSong {
             MessageBox.box(messageErrorBill);
             return null;
 
-        }else if (SongFile.equalsIgnoreCase(empty)) {
+        } else if (SongFile.equalsIgnoreCase(empty)) {
             String messageEmptyFile = "Video File field cannot be empty !";
             MessageBox.box(messageEmptyFile);
             return null;
@@ -154,28 +151,24 @@ public class AddSong {
 
         int b = Integer.parseInt(SongDuration);
 
-       Song addsong=new Song(SongTitle,SongArtist,b,SongFile);
+        Song addsong = new Song(SongTitle, SongArtist, b, SongFile);
         MessageBox.box("Successfully added !");
         addWindow.close();
-       return addsong;
+        return addsong;
 
 
     }
 
     /**
-     *
      * @param s String that check if a String is an integer
      * @return
      */
 
-    public boolean intCheck(String s)
-    {
-        try
-        {
+    public boolean intCheck(String s) {
+        try {
             Integer.parseInt(s);
             return true;
-        } catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
             return false;
         }
     }
