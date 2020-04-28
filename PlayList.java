@@ -146,6 +146,108 @@ public class PlayList {
 
     }
 
+    private Node getNodeAt(int idx) throws Exception {
+
+        if (this.size == 0) {
+
+            throw new Exception("LL is Empty.");
+
+        }
+
+        if (idx < 0 || idx >= this.size) {
+
+            throw new Exception("Invalid Index.");
+
+        }
+
+        Node temp = this.head;
+
+        for (int i = 1; i <= idx; i++) {
+
+            temp = temp.next;
+
+        }
+
+        return temp;
+
+    }
+
+    public Song removeLast() throws Exception {
+
+        if (this.size == 0) {
+
+            throw new Exception("LL is empty.");
+
+        }
+
+        Node temp = this.tail;
+
+        if (this.size == 1) {
+
+            this.head = null;
+
+            this.tail = null;
+
+            this.size = 0;
+
+        } else {
+
+            Node sm2 = getNodeAt(this.size - 2);
+
+            sm2.next = null;
+
+            this.tail = sm2;
+
+            this.size--;
+
+        }
+
+        return temp.data;
+
+    }
+
+
+    public Song removeAt(int idx) throws Exception {
+
+        if (this.size == 0) {
+
+            throw new Exception("LL is empty.");
+
+        }
+
+        if (idx < 0 || idx >= this.size) {
+
+            throw new Exception("Invalid Index.");
+
+        }
+
+        if (idx == 0) {
+
+            return removeFirst();
+
+        } else if (idx == this.size - 1) {
+
+            return removeLast();
+
+        } else {
+
+            Node nm1 = getNodeAt(idx - 1);
+
+            Node n = nm1.next;
+
+            Node np1 = n.next;
+
+            nm1.next = np1;
+
+            this.size--;
+
+            return n.data;
+
+        }
+
+    }
+
+
     /**
      * Populates the circular list into an array for iteration
      * @return

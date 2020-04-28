@@ -154,6 +154,23 @@ public class ViewAllSongs {
             }
         });
 
+        Button deletePlaylist = new Button("Delete from playlist");
+        deletePlaylist.setPadding(new Insets(10, 10, 10, 10));
+        deletePlaylist.setMinWidth(200);
+        deletePlaylist.setFocusTraversable(false);
+        deletePlaylist.setOnAction(e -> {
+        int index = playlistTable.getSelectionModel().getSelectedIndex();
+        try {
+            playlist.removeAt(index);
+            playlistTable.getItems().clear();
+            Song tempplay[]=playlist.convertToArray();
+            for(Song p:tempplay) {
+                playlistTable.getItems().add(new Song(p.getTitle(), p.getArtist()));
+            }
+        } catch (Exception exception) {
+            MessageBox.box("Could not delete song");
+        }
+        });
         Button btnBack = new Button("Back");
         btnBack.setPadding(new Insets(10, 10, 10, 10));
         btnBack.setMinWidth(200);
@@ -169,7 +186,7 @@ public class ViewAllSongs {
         songBox.setAlignment(Pos.CENTER);
         Text about = new Text("Please select a song from table to add");
         VBox buttonBox = new VBox(20);
-        buttonBox.getChildren().addAll(about,searchField, searchbtn, showAllBtn, addPlaylistbtn, btnBack);
+        buttonBox.getChildren().addAll(about,searchField, searchbtn, showAllBtn, addPlaylistbtn,deletePlaylist, btnBack);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox playlistBox = new VBox();
