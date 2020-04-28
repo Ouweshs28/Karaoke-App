@@ -235,7 +235,8 @@ public class ViewAllSongs {
         System.out.println("Search started keyword "+crteria);
         search.start();
         for (String s : songs.keys()) {
-            if (songs.get(s).getTitle().toLowerCase().contains(crteria)) {
+            StringBuilder sb = new StringBuilder(songs.get(s).getTitle().toLowerCase());
+            if (containsString(sb,crteria)) {
                 result.put(songs.get(s).getTitle(), songs.get(s));
             }
         }
@@ -254,33 +255,31 @@ public class ViewAllSongs {
     public Song populatePlaylist(String crteria, HashST<String, Song> songs, PlayList playlist) {
         Song temp[] = playlist.convertToArray();
         boolean exist = false;
-        if (playlist.size() > 0) {
+        if (playlist.size() == 0) {
+            Song newSong = songs.get(crteria.toLowerCase());
+            return newSong;
+        }else{
             for (Song songName : temp) {
                 if (songName.getTitle().toLowerCase().equals(crteria.toLowerCase())) {
                     exist = true;
+                    MessageBox.box("Song already in playlist");
                     break;
                 }
             }
-            if (exist) {
-                MessageBox.box("Song already in playlist");
-            } else {
-                if (songs.contains(crteria.toLowerCase())) {
-                    Song newSong = songs.get(crteria.toLowerCase());
-                    return newSong;
-
-                } else {
-                    MessageBox.box("Song not found enter another title");
-                }
-            }
-        } else {
-            if (songs.contains(crteria.toLowerCase())) {
+            if(!exist){
                 Song newSong = songs.get(crteria.toLowerCase());
                 return newSong;
-
             }
         }
-
         return null;
+    }
+    public static boolean containsString(StringBuilder sb, String findString){
+
+        /*
+         * if the substring is found, position of the match is
+         * returned which is >=0, if not -1 is returned
+         */
+        return sb.indexOf(findString) > -1;
     }
 
 }
