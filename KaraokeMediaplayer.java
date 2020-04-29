@@ -50,26 +50,16 @@ public class KaraokeMediaplayer {
 
         GridPane gridPane = new GridPane();
 
-        if (playlist.size() == 0) {
+        Song current = null;
+        String currentSongTitle = null;
+        try {
+            current = playlist.getFirst();
+            currentSongTitle = playlist.getFirst().getTitle() + " --- " + playlist.getFirst().getArtist();
+        } catch (Exception e) {
             MessageBox.box("Playlist empty");
             return;
         }
 
-        Song current = null;
-        try {
-            current = playlist.getFirst();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        String currentSongTitle = null;
-        try {
-            currentSongTitle = playlist.getFirst().getTitle() + " --- " + playlist.getFirst().getArtist();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         currentSong = new Text();
         currentSong.setText(currentSongTitle);
 
@@ -84,13 +74,9 @@ public class KaraokeMediaplayer {
 
         String nextSongTitle = null;
         try {
-            if (playlist.size() == 1) {
-                nextSongTitle = "No next song!";
-            } else {
                 nextSongTitle = playlist.getAt(1).getTitle() + " --- " + playlist.getAt(1).getArtist();
-            }
         } catch (Exception e) {
-            e.printStackTrace();
+            nextSongTitle = "No next song!";
         }
 
         nextSong.setText(nextSongTitle);
@@ -274,18 +260,6 @@ public class KaraokeMediaplayer {
             }
         });
 
-        /*
-        Platform.runLater(new Runnable() {
-            public void run() {
-                // Updating to the new time value
-                // This will move the slider while running your video
-                videoSlider.setValue(mediaPlayer.getCurrentTime().toMillis() /
-                        mediaPlayer.getTotalDuration()
-                                .toMillis()
-                        * 100);
-            }
-        });*/
-
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
@@ -303,29 +277,12 @@ public class KaraokeMediaplayer {
      */
 
     public void NextSong(PlayList playList, String path) {
-
-        if (playList.size() == 1) {
-            try {
-                playList.removeFirst();
-                mediaPlayer.stop();
-                mediaPlayer.dispose();
-            } catch (Exception e) {
-
-            }
-            MessageBox.box("No next song!");
-            mediaPlayerWindow.close();
-        } else {
             try {
                 playList.removeFirst();
                 try {
-
                     String newSongFile = playList.getFirst().getVideofile();
                     currentSong.setText(playList.getFirst().getTitle() + " --- " + playList.getFirst().getArtist());
-                    if (playList.size() == 1) {
-                        nextSong.setText("No next song available");
-                    } else {
-                        nextSong.setText(playList.getAt(1).getTitle() + " --- " + playList.getAt(1).getArtist());
-                    }
+                    nextSong.setText(playList.getAt(1).getTitle() + " --- " + playList.getAt(1).getArtist());
                     mediaPlayer.stop();
                     mediaPlayer.dispose();
                     media = new Media(new File(path + newSongFile).toURI().toString());
@@ -338,14 +295,21 @@ public class KaraokeMediaplayer {
                     });
 
                 } catch (Exception e) {
+                    nextSong.setText("No next song available");
+                    if(playList.size()==0){
+                        MessageBox.box("No next song!");
+                        mediaPlayer.stop();
+                        mediaPlayer.dispose();
+                        mediaPlayerWindow.close();
+                    }
 
                 }
             } catch (Exception e) {
+                MessageBox.box("No next song!");
+                mediaPlayer.stop();
+                mediaPlayer.dispose();
+                mediaPlayerWindow.close();
             }
         }
-
-    }
-
-
 }
 

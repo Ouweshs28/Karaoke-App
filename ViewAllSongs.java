@@ -249,24 +249,29 @@ public class ViewAllSongs {
 
         }
     }
+
+    /**
+     *
+     * @param crteria
+     * @param songs
+     * @return
+     */
     public HashST<String, Song> titleSearch(String crteria, HashST<String, Song> songs) {
 
         HashST<String, Song> result = new HashST<String, Song>();
-        StopWatch search =new StopWatch();
-        System.out.println("Search started keyword "+crteria);
-        search.start();
         for (String s : songs.keys()) {
             StringBuilder sb = new StringBuilder(songs.get(s).getTitle().toLowerCase());
             if (containsString(sb,crteria)) {
                 result.put(songs.get(s).getTitle(), songs.get(s));
             }
         }
-        System.out.println("Search completed "+search.stop());
         return result;
     }
 
     /**
      Function that checks if the title exist in the playlist
+     Uses Java Sort Method which uses a Quick Sort Approach
+     Searching is done using binary search
      If it does not exist it will return a song to be added in the playlist
      else it will return null
      @return Song or null if already exists
@@ -278,13 +283,22 @@ public class ViewAllSongs {
         Song newSong = songs.get(crteria.toLowerCase());
         Arrays.sort(temp,Song::compareThem);
         int result = binarySearch(temp, newSong);
-            if (result >0) {
-            }else{
+            if (result <0) {
                 return newSong;
+
+            }else{
+                MessageBox.box("Song already exists in the playlist");
             }
         return null;
     }
-    public static boolean containsString(StringBuilder sb, String findString){
+
+    /**
+     *
+     * @param sb StringBuilder that takes String From title of Song
+     * @param findString takes user
+     * @return
+     */
+    public boolean containsString(StringBuilder sb, String findString){
 
         /*
          * if the substring is found, position of the match is
@@ -292,7 +306,14 @@ public class ViewAllSongs {
          */
         return sb.indexOf(findString) > -1;
     }
-    public static int binarySearch( Song[] songs, Song key )
+
+    /**
+     *
+     * @param songs Array of songs to be sorted
+     * @param key Song select by the user
+     * @return negative result if the result is not found
+     */
+    public int binarySearch( Song[] songs, Song key )
     {
         int low = 0;
         int high = songs.length - 1;
@@ -300,17 +321,26 @@ public class ViewAllSongs {
         return binarySearch(songs, key, low, high);
     }
 
-    private static int binarySearch( Song[]songs, Song key, int low, int high )
+    /**
+     *
+     * @param songs Song array
+     * @param key Song to be compared
+     * @param low Lower bound
+     * @param high
+     * @return a positive value if found, negative if not found, 0 if no element to search
+     */
+
+    private int binarySearch( Song[]songs, Song key, int low, int high )
     {
         if(low > high)        //The list has been exhausted without a match.
             return -low - 1;
 
         int mid = (low + high) / 2;
-        if (songs[mid].compareTo(key) == 0)
+        if (songs[mid].compareTo(key) == 0) // if it is middle value , return middle value
             return mid;
-        if(songs[mid].compareTo(key) < 0)
+        if(songs[mid].compareTo(key) < 0) // compare to lower half
             return binarySearch(songs, key, mid +1, high);
-        else
+        else                             // compare to upper half
             return binarySearch(songs, key, low, mid -1);
     }
 
