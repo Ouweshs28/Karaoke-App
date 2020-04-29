@@ -62,4 +62,18 @@ public class Song {
         this.videofile = videofile;
     }
 
+
+
+    public int compareTo(Song p)
+    {
+        int d = getTitle().compareTo(p.getTitle());
+        if (d == 0)
+            d = getTitle().compareTo(p.getTitle());
+        return d;
+    }
+
+    public static int compareThem(Song a, Song b) {
+        return a.title.compareTo(b.title);
+    }
+
 }

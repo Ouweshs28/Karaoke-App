@@ -15,6 +15,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+
 /**
  * A helper class that displays the data on table
  *
@@ -273,26 +275,13 @@ public class ViewAllSongs {
 
     public Song populatePlaylist(String crteria, HashST<String, Song> songs, PlayList playlist) {
         Song temp[] = playlist.convertToArray();
-        boolean exist = false;
-        StopWatch populate=new  StopWatch();
-        if (playlist.size() == 0) {
-            Song newSong = songs.get(crteria.toLowerCase());
-            System.out.println("Added to playlist song "+crteria +" took "+populate.stop());
-            return newSong;
-        }else{
-            for (Song songName : temp) {
-                if (songName.getTitle().toLowerCase().equals(crteria.toLowerCase())) {
-                    exist = true;
-                    MessageBox.box("Song already in playlist");
-                    break;
-                }
-            }
-            if(!exist){
-                Song newSong = songs.get(crteria.toLowerCase());
-                System.out.println("Added to playlist song "+crteria +" took "+populate.stop());
+        Song newSong = songs.get(crteria.toLowerCase());
+        Arrays.sort(temp,Song::compareThem);
+        int result = binarySearch(temp, newSong);
+            if (result >0) {
+            }else{
                 return newSong;
             }
-        }
         return null;
     }
     public static boolean containsString(StringBuilder sb, String findString){
@@ -302,6 +291,27 @@ public class ViewAllSongs {
          * returned which is >=0, if not -1 is returned
          */
         return sb.indexOf(findString) > -1;
+    }
+    public static int binarySearch( Song[] songs, Song key )
+    {
+        int low = 0;
+        int high = songs.length - 1;
+
+        return binarySearch(songs, key, low, high);
+    }
+
+    private static int binarySearch( Song[]songs, Song key, int low, int high )
+    {
+        if(low > high)        //The list has been exhausted without a match.
+            return -low - 1;
+
+        int mid = (low + high) / 2;
+        if (songs[mid].compareTo(key) == 0)
+            return mid;
+        if(songs[mid].compareTo(key) < 0)
+            return binarySearch(songs, key, mid +1, high);
+        else
+            return binarySearch(songs, key, low, mid -1);
     }
 
 }
