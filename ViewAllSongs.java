@@ -1,3 +1,4 @@
+import com.sun.prism.paint.Stop;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,8 +66,6 @@ public class ViewAllSongs {
             tableSong.getItems().add(songs.get(s));
 
         tableSong.getColumns().addAll(Title, Artist, Duration);
-
-
 
 
         TableColumn<Song, String> PlaylistTtitle = new TableColumn<>("Song Title");
@@ -139,7 +138,7 @@ public class ViewAllSongs {
         addPlaylistbtn.setFocusTraversable(false);
         addPlaylistbtn.setOnAction(e -> {
             if(tableSong.getSelectionModel().getSelectedItem()==null){
-                MessageBox.box("Please select a song from table");
+                MessageBox.box("Please select a song to add from Song table");
             }else {
                 Song addSong= (Song) tableSong.getSelectionModel().getSelectedItem();
                 Song newSong = populatePlaylist(addSong.getTitle().toLowerCase(), songs, playlist);
@@ -161,14 +160,17 @@ public class ViewAllSongs {
         deletePlaylist.setOnAction(e -> {
         int index = playlistTable.getSelectionModel().getSelectedIndex();
         try {
+            StopWatch delete=new StopWatch();
+            delete.start();
             playlist.removeAt(index);
+            System.out.println("Delete song from playlist took "+delete.stop());
             playlistTable.getItems().clear();
             Song tempplay[]=playlist.convertToArray();
             for(Song p:tempplay) {
                 playlistTable.getItems().add(new Song(p.getTitle(), p.getArtist()));
             }
         } catch (Exception exception) {
-            MessageBox.box("Could not delete song");
+            MessageBox.box("Please select a song to delete from playlist table");
         }
         });
         Button btnBack = new Button("Back");
@@ -184,7 +186,7 @@ public class ViewAllSongs {
         songBox.getChildren().add(tableSong);
         songBox.setMinWidth(3 * columnWidth);
         songBox.setAlignment(Pos.CENTER);
-        Text about = new Text("Please select a song from table to add");
+        Text about = new Text("Select a record from respective table for add/delete");
         VBox buttonBox = new VBox(20);
         buttonBox.getChildren().addAll(about,searchField, searchbtn, showAllBtn, addPlaylistbtn,deletePlaylist, btnBack);
         buttonBox.setAlignment(Pos.CENTER);
@@ -272,8 +274,10 @@ public class ViewAllSongs {
     public Song populatePlaylist(String crteria, HashST<String, Song> songs, PlayList playlist) {
         Song temp[] = playlist.convertToArray();
         boolean exist = false;
+        StopWatch populate=new  StopWatch();
         if (playlist.size() == 0) {
             Song newSong = songs.get(crteria.toLowerCase());
+            System.out.println("Added to playlist song "+crteria +" took "+populate.stop());
             return newSong;
         }else{
             for (Song songName : temp) {
@@ -285,6 +289,7 @@ public class ViewAllSongs {
             }
             if(!exist){
                 Song newSong = songs.get(crteria.toLowerCase());
+                System.out.println("Added to playlist song "+crteria +" took "+populate.stop());
                 return newSong;
             }
         }

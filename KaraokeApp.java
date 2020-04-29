@@ -3,11 +3,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 
@@ -85,6 +85,7 @@ public class KaraokeApp extends Application {
                 
 
         });
+        btnAddSong.setTooltip(new Tooltip("Add a song to the playlist"));
 
         Button btnMediaPlayer = new Button("Open Media Player");
         btnMediaPlayer.setAlignment(Pos.BASELINE_LEFT);
@@ -94,6 +95,7 @@ public class KaraokeApp extends Application {
             KaraokeMediaplayer player =new KaraokeMediaplayer();
             player.StartMediaPlayer(playlist);
         });
+        btnMediaPlayer.setTooltip(new Tooltip("Starts media player"));
 
         Button btnAddtoPlaylist = new Button("Playlists/Songs");
         btnAddtoPlaylist.setAlignment(Pos.BASELINE_LEFT);
@@ -106,18 +108,15 @@ public class KaraokeApp extends Application {
 
 
         });
+        btnAddtoPlaylist.setTooltip(new Tooltip("View songs and modify your playlist accordingly"));
 
         Button btnExit = new Button("Exit");
         btnExit.setAlignment(Pos.BASELINE_LEFT);
         btnExit.setMaxWidth(250);
         btnExit.setFocusTraversable(false);
         btnExit.setOnAction(e -> {
-
                 End.Exit();
-
-
         });
-
 
 
         mainMenu.getChildren().add(vbox);

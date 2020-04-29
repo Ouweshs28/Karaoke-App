@@ -97,6 +97,7 @@ public class AddSong {
         Scene scene = new Scene(addSong);
 
         addWindow.setScene(scene);
+        addWindow.setAlwaysOnTop(true);
         addWindow.setMaximized(true);
         addWindow.showAndWait();
         return newSong;

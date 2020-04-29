@@ -7,18 +7,16 @@ import java.util.Scanner;
  */
 
 public class FileManagement {
-    private File songfile;
     private Scanner scan = null;
 
 
     public void getFile(String filename) {
-        songfile = new File(filename);
+        File songfile = new File(filename);
         try {
             scan = new Scanner(songfile);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             System.exit(0);
-
         }
     }
 

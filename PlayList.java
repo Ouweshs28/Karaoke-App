@@ -1,5 +1,5 @@
 /**
- * Custom Circular Queue Array Implementations
+ * LinkedList Array Implementations
  * Keeps track of head,tail and size
  */
 public class PlayList {
@@ -146,6 +146,13 @@ public class PlayList {
 
     }
 
+    /**
+     *
+     * @param idx index of element
+     * @return Song item
+     * @throws Exception
+     */
+
     private Node getNodeAt(int idx) throws Exception {
 
         if (this.size == 0) {
@@ -171,6 +178,12 @@ public class PlayList {
         return temp;
 
     }
+
+    /**
+     * Method to remove the last element
+     * @return Song
+     * @throws Exception
+     */
 
     public Song removeLast() throws Exception {
 
@@ -205,6 +218,13 @@ public class PlayList {
         return temp.data;
 
     }
+
+    /**
+     *
+     * @param idx index you want to remove
+     * @return
+     * @throws Exception
+     */
 
 
     public Song removeAt(int idx) throws Exception {
@@ -250,7 +270,7 @@ public class PlayList {
 
     /**
      * Populates the circular list into an array for iteration
-     * @return
+     * @return Song Array
      */
 
     public Song[] convertToArray() {
