@@ -112,7 +112,7 @@ public class AddSong {
      * @return Song object to add to HashST
      */
 
-    private Song AddSong(String SongTitle, String SongArtist, String SongDuration, String SongFile,HashST<String,Song> songs) {
+    public Song AddSong(String SongTitle, String SongArtist, String SongDuration, String SongFile,HashST<String,Song> songs) {
         /*
          *
          * durationcheck is a regex that verifies that a string has number and decimal
@@ -164,6 +164,45 @@ public class AddSong {
 
 
     }
+
+    public Song AddSongTest(String SongTitle, String SongArtist, String SongDuration, String SongFile,HashST<String,Song> songs) {
+        /*
+         *
+         * durationcheck is a regex that verifies that a string has number and decimal
+         * fileformat is a regex to check if file ends with .mov/.mkv/.avi/.mp4
+         * */
+        String empty = "";
+        String fileformat = "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(.avi|.mp4|.mkv|.mov)$";
+
+        if (SongTitle.equalsIgnoreCase(empty)) {
+            return null;
+        } else if (SongArtist.equalsIgnoreCase(empty)) {
+            return null;
+        } else if (SongDuration.equalsIgnoreCase(empty)) {
+            return null;
+
+        } else if ((!intCheck(SongDuration)) || (SongDuration.equalsIgnoreCase("0"))) {
+            return null;
+
+        } else if (SongFile.equalsIgnoreCase(empty)) {
+            return null;
+        } else if (!SongFile.matches(fileformat)) {
+            return null;
+        }
+
+        int b = Integer.parseInt(SongDuration);
+
+        if(songs.get(SongTitle.toLowerCase())==null) {
+            Song addsong = new Song(SongTitle, SongArtist, b, SongFile);
+            return addsong;
+        }
+        else {
+            return null;
+        }
+
+
+    }
+
 
     /**
      * @param s String that check if a String is an integer

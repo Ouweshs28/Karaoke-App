@@ -93,6 +93,18 @@ public class HashST<Key, Value> {
         n++;
         st[i] = new Node(key, val, st[i]);
     }
+    /**
+     * Returns true if this symbol table contains the specified key.
+     *
+     * @param  key the key
+     * @return {@code true} if this symbol table contains {@code key};
+     *         {@code false} otherwise
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public boolean contains(Key key) {
+        if (key == null) throw new IllegalArgumentException("argument to contains() is null");
+        return get(key) != null;
+    }
 
     /**
      * Returns all keys in the symbol table.

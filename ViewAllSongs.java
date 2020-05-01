@@ -1,4 +1,3 @@
-import com.sun.prism.paint.Stop;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -289,6 +288,20 @@ public class ViewAllSongs {
             }else{
                 MessageBox.box("Song already exists in the playlist");
             }
+        return null;
+    }
+
+    public Song populatePlaylistTest(String crteria, HashST<String, Song> songs, PlayList playlist) {
+        Song temp[] = playlist.convertToArray();
+        Song newSong = songs.get(crteria.toLowerCase());
+        Arrays.sort(temp,Song::compareThem);
+        int result = binarySearch(temp, newSong);
+        if (result <0) {
+            return newSong;
+
+        }else{
+            MessageBox.box("Song already exists in the playlist");
+        }
         return null;
     }
 

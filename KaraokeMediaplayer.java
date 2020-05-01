@@ -240,6 +240,11 @@ public class KaraokeMediaplayer {
         mediaPlayerWindow.show();
 
     }
+    /*
+    Updates the values of the video sliders accordingly
+    If its a starting video value is set to zero
+    An observable listener is added to update the slider accordingly and change duration when video slider is pressed
+     */
 
     protected void updatesValues() {
 
@@ -273,7 +278,11 @@ public class KaraokeMediaplayer {
 
     /**
      * @param playList takes playlist and updates it accordingly
-     * @param path     takes path of folder
+     * @param path takes path of folder
+     * Removes the first song in the list
+     * -If there is an exception  - prompts no next song ,closes the player
+     *  Else it changes the title of the current song and next song
+     *  If it is the last song it changes the next song title to no next song available
      */
 
     public void NextSong(PlayList playList, String path) {
