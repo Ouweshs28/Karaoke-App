@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class AddSong {
     private Stage addWindow;
 
-    public Song InputSong() {
+    public Song InputSong(HashST<String,Song> songs) {
         TextField inputSongTitle, inputSongArtist, inputSongDuration, inputSongFile;
         Song newSong = new Song();
 
@@ -63,7 +63,7 @@ public class AddSong {
         btnAdd.setMinWidth(185);
         btnAdd.setFocusTraversable(false);
         btnAdd.setOnAction(e -> {
-            Song returnSong = AddSong(inputSongTitle.getText(), inputSongArtist.getText(), inputSongDuration.getText(), inputSongFile.getText());
+            Song returnSong = AddSong(inputSongTitle.getText(), inputSongArtist.getText(), inputSongDuration.getText(), inputSongFile.getText(),songs);
             if(returnSong!=null) {
                 newSong.setTitle(returnSong.getTitle());
                 newSong.setArtist(returnSong.getArtist());
@@ -112,7 +112,7 @@ public class AddSong {
      * @return Song object to add to HashST
      */
 
-    private Song AddSong(String SongTitle, String SongArtist, String SongDuration, String SongFile) {
+    private Song AddSong(String SongTitle, String SongArtist, String SongDuration, String SongFile,HashST<String,Song> songs) {
         /*
          *
          * durationcheck is a regex that verifies that a string has number and decimal
@@ -151,10 +151,16 @@ public class AddSong {
 
         int b = Integer.parseInt(SongDuration);
 
-        Song addsong = new Song(SongTitle, SongArtist, b, SongFile);
-        MessageBox.box("Successfully added !");
-        addWindow.close();
-        return addsong;
+        if(songs.get(SongTitle.toLowerCase())==null) {
+            Song addsong = new Song(SongTitle, SongArtist, b, SongFile);
+            MessageBox.box("Successfully added !");
+            addWindow.close();
+            return addsong;
+        }
+        else {
+            MessageBox.box("Song title already exist please add a new one");
+            return null;
+        }
 
 
     }

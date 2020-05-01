@@ -16,26 +16,6 @@ import java.util.List;
  */
 public class KaraokeApp extends Application {
 
-
-    public String takeArguement(){
-        final Parameters params = getParameters();
-        final List<String> parameters = params.getRaw();
-        String filepath="";
-        String args[]= parameters.toArray(new String[0]);
-
-        if(args.length==0){
-            filepath="sample_song_data";
-            return filepath;
-        }else if(args.length==1){
-            filepath=args[0];
-            return filepath;
-        }else{
-            System.out.println("Too many arguments");
-            System.exit(0);
-        }
-        return null;
-    }
-
     /**
      * @param args Launches the main method
      */
@@ -78,7 +58,7 @@ public class KaraokeApp extends Application {
         btnAddSong.setOnAction(e -> {
 
                 AddSong addnew=new AddSong();
-                Song addSong=addnew.InputSong();
+                Song addSong=addnew.InputSong(song);
                 if(!addSong.getArtist().equalsIgnoreCase("")){
                     song.put(addSong.getTitle().toLowerCase(),addSong);
                 }
@@ -138,5 +118,31 @@ public class KaraokeApp extends Application {
         });
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    /**
+     * Function to take file argument from the user
+     * If no arguments are given default file is taken
+     * If a single argument is given it is taken
+     * If more than 1 argument is given error message is shown
+     * @return
+     */
+    public String takeArguement(){
+        final Parameters params = getParameters();
+        final List<String> parameters = params.getRaw();
+        String filepath="";
+        String args[]= parameters.toArray(new String[0]);
+
+        if(args.length==0){
+            filepath="sample_song_data";
+            return filepath;
+        }else if(args.length==1){
+            filepath=args[0];
+            return filepath;
+        }else{
+            System.out.println("Too many arguments");
+            System.exit(0);
+        }
+        return null;
     }
 }

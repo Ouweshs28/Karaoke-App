@@ -100,7 +100,7 @@ public class HashST<Key, Value> {
      * @return all keys in the symbol table, as in iterable
      */
     @SuppressWarnings("unchecked")
-    public Iterable<Key> keys()  {
+    public Iterable<Key> keys() {
         ArrayDeque<Key> queue = new ArrayDeque<Key>();
         for (int i = 0; i < m; i++) {
             for (Node x = st[i]; x != null; x = x.next) {
@@ -109,6 +109,4 @@ public class HashST<Key, Value> {
         }
         return queue;
     }
-
-
 }
