@@ -2,6 +2,8 @@ import javafx.application.Application;
 import org.junit.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class KaraokeAppTest {
@@ -65,17 +67,26 @@ public class KaraokeAppTest {
      */
 
     @Test
-    public void addSongTesterFail() {
+    public void addSongTester() {
         String filepath = "sample_song_data";
         FileManagement songFile = new FileManagement();
         HashST<String, Song> song = songFile.readFile(filepath);
         String title = "Hello";
         String artist = "Adelle";
-        String duration = "abc";
-        String filename = "test";
+        String duration = "434";
+        // invalid file path
+        String filenameinvalid = "test";
+        //valid file path
+        String filenamevalid="test,mp4";
         AddSong songAdder = new AddSong();
-        Song newSong = songAdder.AddSongTest(title, artist, duration, filename, song);
-        assertEquals(newSong, song.get(title.toLowerCase()));
+        Song newSong = songAdder.AddSongTest(title, artist, duration, filenameinvalid, song);
+        Song compare=new Song(title,artist,Integer.parseInt(duration),filenameinvalid);
+        //Invalid songs will not match
+        assertNotEquals(newSong, compare);
+        Song newSongvalid= new Song(title,artist,Integer.parseInt(duration),filenamevalid);
+        newSong = songAdder.AddSongTest(title, artist, duration, filenamevalid, song);
+        //valid songs will be valid
+        assertEquals(newSong,newSongvalid);
 
     }
 
@@ -100,6 +111,32 @@ public class KaraokeAppTest {
             System.out.println("Playlist empty");
         }
         assertSame("should be same", firstSong, getSong);
+    }
+
+    @Test
+    /**
+     * Testing playlist exceptions
+     */
+    public void testExceptionMessage() {
+        PlayList list =new PlayList();
+        Song test = new Song();
+
+        //adding a new Song for test
+        list.addLast(test);
+        try {
+            list.getAt(1);
+            fail("Expected an Exception to be thrown");
+        } catch (Exception anException) {
+            assertThat(anException.getMessage(), is("Invalid Index."));
+        }
+        //removing first and checking exception
+        try {
+            list.removeFirst();
+            list.getFirst();
+            fail("Expected an Exception to be thrown");
+        } catch (Exception anException) {
+            assertThat(anException.getMessage(), is("Playlist is empty"));
+        }
     }
 
     /**
@@ -144,10 +181,14 @@ public class KaraokeAppTest {
         HashST<String, Song> song = songFile.readFile(filepath);
         ViewAllSongs searchTitle = new ViewAllSongs();
         String search="love";
+        String invalid="";
         //Passing search criteria and returning results
-        HashST<String,Song> result=searchTitle.titleSearch(search,song);
-        assertNotNull(result);
-        assertTrue(result.size()>0);
+        if(searchTitle.checkFieldTest(search)) {
+            HashST<String, Song> result = searchTitle.titleSearch(search, song);
+            assertNotNull(result);
+            assertTrue(result.size() > 0);
+        }
+        assertFalse("Empty search",searchTitle.checkFieldTest(invalid));
     }
 
     /**

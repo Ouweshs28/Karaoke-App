@@ -229,6 +229,14 @@ public class ViewAllSongs {
             return true;
         }
     }
+@Ignore("Function written without message box")
+    public boolean checkFieldTest(String s) {
+        if (s.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /**
      *

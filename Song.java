@@ -78,6 +78,11 @@ public class Song {
         return a.title.compareTo(b.title);
     }
 
+    /**
+     *
+     * @param o - an objecct to compare
+     * @return true if equal, false if not valid
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

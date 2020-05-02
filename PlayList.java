@@ -28,7 +28,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is Empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
@@ -47,7 +47,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is Empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
@@ -120,7 +120,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
@@ -157,7 +157,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is Empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
@@ -189,7 +189,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
@@ -231,7 +231,7 @@ public class PlayList {
 
         if (this.size == 0) {
 
-            throw new Exception("LL is empty.");
+            throw new Exception("Playlist is empty");
 
         }
 
