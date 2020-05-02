@@ -34,7 +34,16 @@ public class HashST<Key, Value> {
     public HashST(int m) {
         this.m = m;
         st = new Node[m];
-    } 
+    }
+
+    /**
+     * Returns the number of key-value pairs in this symbol table.
+     *
+     * @return the number of key-value pairs in this symbol table
+     */
+    public int size() {
+        return n;
+    }
 
     // resize the hash table to have the given number of chains,
     // rehashing all of the keys

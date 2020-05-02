@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.junit.Ignore;
 
 import java.util.Arrays;
 
@@ -240,7 +241,6 @@ public class ViewAllSongs {
         if (checkField(searchField.getText())) {
             HashST<String, Song> temp = titleSearch(searchField.getText().toLowerCase(), songs);
             tableSong.getItems().clear();
-
             for (String s : temp.keys()) {
                 tableSong.getItems().add(temp.get(s));
             }
@@ -282,6 +282,7 @@ public class ViewAllSongs {
         Song newSong = songs.get(crteria.toLowerCase());
         Arrays.sort(temp,Song::compareThem);
         int result = binarySearch(temp, newSong);
+
             if (result <0) {
                 return newSong;
 
@@ -291,6 +292,7 @@ public class ViewAllSongs {
         return null;
     }
 
+    @Ignore("Function written without GUI for JUnit Testing")
     public Song populatePlaylistTest(String crteria, HashST<String, Song> songs, PlayList playlist) {
         Song temp[] = playlist.convertToArray();
         Song newSong = songs.get(crteria.toLowerCase());
@@ -298,11 +300,10 @@ public class ViewAllSongs {
         int result = binarySearch(temp, newSong);
         if (result <0) {
             return newSong;
-
         }else{
-            MessageBox.box("Song already exists in the playlist");
+            return null;
         }
-        return null;
+
     }
 
     /**

@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Helper Class to input Song
@@ -165,6 +167,7 @@ public class AddSong {
 
     }
 
+@Ignore("Function written without GUI for JUnit Testing")
     public Song AddSongTest(String SongTitle, String SongArtist, String SongDuration, String SongFile,HashST<String,Song> songs) {
         /*
          *
