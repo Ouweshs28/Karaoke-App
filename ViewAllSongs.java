@@ -162,10 +162,7 @@ public class ViewAllSongs {
         deletePlaylist.setOnAction(e -> {
         int index = playlistTable.getSelectionModel().getSelectedIndex();
         try {
-            StopWatch delete=new StopWatch();
-            delete.start();
             playlist.removeAt(index);
-            System.out.println("Delete song from playlist took "+delete.stop());
             playlistTable.getItems().clear();
             Song tempplay[]=playlist.convertToArray();
             for(Song p:tempplay) {

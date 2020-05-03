@@ -2,7 +2,6 @@ import javafx.application.Application;
 import org.junit.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -49,7 +48,7 @@ public class KaraokeAppTest {
         thread.setDaemon(true);
         thread.start();
         try {
-            Thread.sleep(2000);  // Wait for 3 seconds before interrupting JavaFX application
+            Thread.sleep(3000);  // Wait for 3 seconds before interrupting JavaFX application
         } catch (InterruptedException ex) {
 
         }
