@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.junit.Ignore;
@@ -100,6 +101,7 @@ public class ViewAllSongs {
         TextField searchField = new TextField();
         searchField.setPromptText("Type something to search");
         searchField.setMinWidth(200);
+        searchField.setMaxWidth(200);
         searchField.setFocusTraversable(false);
 
 
@@ -185,7 +187,8 @@ public class ViewAllSongs {
         songBox.getChildren().add(tableSong);
         songBox.setMinWidth(3 * columnWidth);
         songBox.setAlignment(Pos.CENTER);
-        Text about = new Text("Select a record from respective table for add/delete");
+        Text about = new Text("Select a record\nfrom respective table\nfor add/delete");
+        about.setTextAlignment(TextAlignment.CENTER);
         VBox buttonBox = new VBox(20);
         buttonBox.getChildren().addAll(about,searchField, searchbtn, showAllBtn, addPlaylistbtn,deletePlaylist, btnBack);
         buttonBox.setAlignment(Pos.CENTER);

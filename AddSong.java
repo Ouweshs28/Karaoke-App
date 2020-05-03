@@ -38,25 +38,35 @@ public class AddSong {
         Label addSongTitle = new Label();
         addSongTitle.setText("Add a new song to the library");
         addSongTitle.setAlignment(Pos.CENTER);
+        addSongTitle.setMinWidth(300);
+        addSongTitle.setMaxWidth(300);
         addSongTitle.setPrefWidth(Double.MAX_VALUE);
 
         Text SongTitle = new Text("Enter title :");
         inputSongTitle = new TextField();
+        inputSongTitle.setMinWidth(300);
+        inputSongTitle.setMaxWidth(300);
         inputSongTitle.setPromptText("enter Song title");
         inputSongTitle.setFocusTraversable(false);
 
         Text SongArtist = new Text("Enter Song Artist :");
         inputSongArtist = new TextField();
+        inputSongArtist.setMinWidth(300);
+        inputSongArtist.setMaxWidth(300);
         inputSongArtist.setPromptText("enter Song artist");
         inputSongArtist.setFocusTraversable(false);
 
         Text SongDuration = new Text("Enter Song Duration:");
         inputSongDuration = new TextField();
+        inputSongDuration.setMinWidth(300);
+        inputSongDuration.setMaxWidth(300);
         inputSongDuration.setPromptText("enter Song duration in seconds");
         inputSongDuration.setFocusTraversable(false);
 
         Text SongFile = new Text("Enter Song File Name :");
         inputSongFile = new TextField();
+        inputSongFile.setMinWidth(300);
+        inputSongFile.setMaxWidth(300);
         inputSongFile.setPromptText("enter video file name");
         inputSongFile.setFocusTraversable(false);
 
