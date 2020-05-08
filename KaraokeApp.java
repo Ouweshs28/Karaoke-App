@@ -61,9 +61,8 @@ public class KaraokeApp extends Application {
                 Song addSong=addnew.InputSong(song);
                 if(!addSong.getArtist().equalsIgnoreCase("")){
                     song.put(addSong.getTitle().toLowerCase(),addSong);
-                }
-                
 
+                }
         });
         btnAddSong.setTooltip(new Tooltip("Add a song to the playlist"));
 

@@ -69,8 +69,6 @@ public class AddSong {
         inputSongFile.setMaxWidth(300);
         inputSongFile.setPromptText("enter video file name");
         inputSongFile.setFocusTraversable(false);
-
-
         Button btnAdd = new Button("Add Song");
         btnAdd.setMinWidth(185);
         btnAdd.setFocusTraversable(false);
@@ -109,7 +107,6 @@ public class AddSong {
         Scene scene = new Scene(addSong);
 
         addWindow.setScene(scene);
-        addWindow.setAlwaysOnTop(true);
         addWindow.setMaximized(true);
         addWindow.showAndWait();
         return newSong;
